@@ -16,12 +16,18 @@
 
     implicit none
 
-    integer :: status, file_unit, i
+    integer :: status, file_unit, i, current_test = 1  ! Added current_test to track test number
     logical :: file_exists, testing_complete
     character(len=100) :: command
     
     testing_complete = .false.
-    call testiran(status, testing_complete)
+    inquire(file='tabela.izl', exist=file_exists)
+    if (file_exists) then
+        open(unit=15, file='tabela.izl', status='old')
+        close(unit=15, status='delete')
+    end if
+
+    call testiran(status, testing_complete, current_test)
     if (status /= 0) then
         write(*,*) 'Greska u prvom pozivu testiran sabrutine, unesi 1 da nastavis testiranje sledeceg primera'
         read(*,*) i
@@ -38,14 +44,16 @@
         call execute_command_line('del pak.unv', wait=.true.)
         call execute_command_line('del pak.neu', wait=.true.)
 
-        command = 'test\pak < aa'
+        !command = 'test\pak < aa'
+        command = 'PAKS < aa'
         call execute_command_line(command, wait=.true., exitstat=status)
         if (status /= 0) then
             write(*,*) 'Greska: PAK je negde crko, unesi 1 da nastavis testiranje sledeceg primera'
             read(*,*) i
         end if
         
-        call testiran(status, testing_complete)
+        current_test = current_test + 1  ! Increment test counter
+        call testiran(status, testing_complete, current_test)
         if (status /= 0) then
             write(*,*) 'Greska u testiran sabrutini, unesi 1 da nastavis testiranje sledeceg primera'
             read(*,*) i
@@ -61,20 +69,32 @@
     call execute_command_line('del z*', wait=.true.)
     call execute_command_line('del pak.unv', wait=.true.)
     call execute_command_line('del pak.neu', wait=.true.)
+    
+    call execute_command_line('del aa', wait=.true.)
+    call execute_command_line('del CONTROL.SRE', wait=.true.)
+    call execute_command_line('del dijagram', wait=.true.)
+    call execute_command_line('del EGGOS', wait=.true.)
+    call execute_command_line('del fort.58', wait=.true.)
+    call execute_command_line('del GE0001.neu', wait=.true.)
+    call execute_command_line('del *.UNV', wait=.true.)
+    call execute_command_line('del SE0001', wait=.true.)
+    call execute_command_line('del POMER1', wait=.true.)
+    call execute_command_line('del fort.*', wait=.true.)
 
     end program paktest   
 
-    subroutine testiran(status, testing_complete)
+    subroutine testiran(status, testing_complete, current_test)
         
     IMPLICIT NONE
 
     ! Variable declarations
     CHARACTER(LEN=256) :: line, valueOfLine, search_str, compare_str, lst_str, lst_result, s2
     CHARACTER(LEN=1) :: char, emptySpace
-    INTEGER :: i, numberOfLInes, m, n, current_hash_count, ios, test, red, startChar, endChar
+    INTEGER :: i, numberOfLInes, current_hash_count, ios, test, red, startChar, endChar
+    INTEGER, intent(in) :: current_test  ! Added current_test as input parameter
     LOGICAL :: file_exists
     LOGICAL, intent(inout) :: testing_complete
-
+    
     ! File units
     INTEGER, PARAMETER :: UNIT_AA = 10
     INTEGER, PARAMETER :: UNIT_IZL = 11
@@ -86,25 +106,15 @@
 
     status = 0
 
-    INQUIRE(FILE='pom.pom', EXIST=file_exists)
-    IF (.NOT. file_exists) THEN
-        OPEN(UNIT=UNIT_POM, FILE='pom.pom', STATUS='REPLACE')
-        WRITE(UNIT_POM, *) 1, 1
-        CLOSE(UNIT_POM)
-    END IF
-
     lst_str = ''
-    OPEN(UNIT=UNIT_POM, FILE='pom.pom', STATUS='OLD')
-    READ(UNIT_POM, *) m, n
-    CLOSE(UNIT_POM)
 
-    INQUIRE(FILE='tabela.pod', EXIST=file_exists)
+    INQUIRE(FILE='test/tabela.pod', EXIST=file_exists)
     IF (.NOT. file_exists) THEN
         status = 1
         RETURN
     END IF
     
-    OPEN(UNIT=UNIT_POD, FILE='tabela.pod', STATUS='OLD', IOSTAT=ios)
+    OPEN(UNIT=UNIT_POD, FILE='test/tabela.pod', STATUS='OLD', IOSTAT=ios)
     IF (ios /= 0) THEN
         status = 2
         RETURN
@@ -124,12 +134,7 @@
         IF (line(1:1) == '#') THEN
             current_hash_count = current_hash_count + 1
 
-            IF (current_hash_count == n) THEN
-
-                OPEN(UNIT=UNIT_POM, FILE='pom.pom', STATUS='REPLACE')
-                WRITE(UNIT_POM, *) m, n + 1
-                CLOSE(UNIT_POM)
-                
+            IF (current_hash_count == current_test) THEN
                 PRINT *, 'proverava fajl ', TRIM(line(2:))
 
                 OPEN(UNIT=UNIT_IZL, FILE='tabela.izl', POSITION='APPEND')
@@ -148,7 +153,7 @@
                 EXIT
             END IF
         ELSE
-            IF (current_hash_count == n-1) THEN
+            IF (current_hash_count == current_test-1) THEN
                 INQUIRE(FILE='pak.lst', EXIST=file_exists)
                 IF (.NOT. file_exists) THEN
                     CLOSE(UNIT_POD)
@@ -238,6 +243,3 @@
     END DO
         
     end subroutine testiran
-
-   
-
