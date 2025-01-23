@@ -20,13 +20,16 @@
     INTEGER, PARAMETER :: UNIT_LST = 15
     INTEGER, PARAMETER :: UNIT_DEL = 42
     logical :: file_exists, testing_complete
+    logical :: is_windows
     character(len=100) :: command
     
+    is_windows = .false.
     testing_complete = .false.
+    call detect_os(is_windows)
 
     call delete_if_exists('tabela.izl',UNIT_DEL)
     
-    call testiran(status, testing_complete, current_test)
+    call testiran(status, testing_complete, current_test,is_windows)
     if (status /= 0) then
         write(*,*) 'Greska u prvom pozivu testiran sabrutine, unesi 1 da nastavis testiranje sledeceg primera'
         read(*,*) i
@@ -37,10 +40,15 @@
         call delete_if_exists('pak.lst',UNIT_LST)
         call delete_if_exists('pak.unv',UNIT_DEL)
         call delete_if_exists('pak.neu',UNIT_DEL)
-        call delete_files_prefix('Z')
+        call delete_files_prefix('Z',is_windows)
 
+        if (is_windows) then      ! Windows version
+            command = 'PAKS < aa'
+        else        ! Linux/Unix version
+            command = './PAKS < aa'
+        endif
         !command = 'test\pak < aa'
-        command = 'PAKS < aa'
+        
         call execute_command_line(command, wait=.true., exitstat=status)
         if (status /= 0) then
             write(*,*) 'Greska: PAK je negde crko, unesi 1 da nastavis testiranje sledeceg primera'
@@ -48,7 +56,7 @@
         end if
         
         current_test = current_test + 1  ! Increment test counter
-        call testiran(status, testing_complete, current_test)
+        call testiran(status, testing_complete, current_test,is_windows)
         if (status /= 0) then
             write(*,*) 'Greska u testiran sabrutini, unesi 1 da nastavis testiranje sledeceg primera'
             read(*,*) i
@@ -58,7 +66,7 @@
     call delete_if_exists('pak.lst',UNIT_LST)
     call delete_if_exists('pak.unv',UNIT_DEL)
     call delete_if_exists('pak.neu',UNIT_DEL)
-    call delete_files_prefix('Z')
+    call delete_files_prefix('Z',is_windows)
     
     call delete_if_exists('aa',UNIT_DEL)
     call delete_if_exists('CONTROL.SRE',UNIT_DEL)
@@ -69,23 +77,22 @@
     call delete_if_exists('POMER1',UNIT_DEL)
     call delete_if_exists('pak.neu',UNIT_DEL)
     
-
-    !call execute_command_line('del *.UNV', wait=.true.)
-!call execute_command_line('del fort.*', wait=.true.)
-    call delete_files_prefix('fort.')
-    call delete_files_sufix('.UNV')
+    call delete_files_prefix('fort.',is_windows)
+    call delete_files_sufix('.UNV',is_windows)
     
     end program paktest   
-
-    subroutine testiran(status, testing_complete, current_test)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    subroutine testiran(status, testing_complete, current_test,is_windows)
         
     IMPLICIT NONE
 
-    ! Variable declarations
+    !Variable declarations
     CHARACTER(LEN=256) :: line, valueOfLine, search_str, compare_str, lst_str, lst_result, s2
     CHARACTER(LEN=1) :: char, emptySpace
+    character(len=100) :: command, test_example
     INTEGER :: i, numberOfLInes, current_hash_count, ios, test, red, startChar, endChar
     INTEGER, intent(in) :: current_test  ! Added current_test as input parameter
+    logical, intent(in) :: is_windows
     LOGICAL :: file_exists
     LOGICAL, intent(inout) :: testing_complete
     
@@ -136,6 +143,11 @@
                 CLOSE(UNIT_IZL)
 
                 OPEN(UNIT=UNIT_AA, FILE='aa', STATUS='REPLACE')
+                if (is_windows) then      ! Windows version
+                    test_example = TRIM(line(2:))
+                else        ! Linux/Unix version
+                    test_example = TRIM(line(2:))
+                endif
                 WRITE(UNIT_AA, '(A)') TRIM(line(2:))
                 WRITE(UNIT_AA, '(A)') 'pak.lst'
                 WRITE(UNIT_AA, '(A)') 'pak.unv'
@@ -237,7 +249,7 @@
     END DO
         
     end subroutine testiran
-    
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!    
     subroutine delete_if_exists(filename, UNIT_DEL)
         character(len=*), intent(in) :: filename
         INTEGER, intent(in) :: UNIT_DEL
@@ -251,12 +263,12 @@
             !end if
         end if
     end subroutine delete_if_exists
-    
-    subroutine delete_files_prefix(prefix)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!    
+    subroutine delete_files_prefix(prefix,is_windows)
     character(len=*), intent(in) :: prefix
+    logical, intent(in) :: is_windows
     integer :: status
     character(len=100) :: command
-    logical :: is_windows
     call detect_os(is_windows)
     if (is_windows) then      ! Windows version
         command = 'del ' // trim(prefix) // '* /Q'
@@ -265,12 +277,12 @@
     endif
     call execute_command_line(command, wait=.true., exitstat=status)
     end subroutine delete_files_prefix
-    
-    subroutine delete_files_sufix(sufix)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!    
+    subroutine delete_files_sufix(sufix,is_windows)
     character(len=*), intent(in) :: sufix
+    logical, intent(in) :: is_windows
     integer :: status
     character(len=100) :: command
-    logical :: is_windows
     call detect_os(is_windows)
     if (is_windows) then      ! Windows version
         command = 'del *' // trim(sufix) // ' /Q'
@@ -279,7 +291,7 @@
     endif
     call execute_command_line(command, wait=.true., exitstat=status)
     end subroutine delete_files_sufix
-    
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!    
     subroutine detect_os(is_windows)
     logical, intent(out) :: is_windows
     character(256) :: os_name, windir
@@ -294,3 +306,4 @@
     ! If we get here, assume it's Unix/Linux
     is_windows = .false.
     end subroutine detect_os
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
