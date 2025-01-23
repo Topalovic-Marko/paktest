@@ -17,16 +17,15 @@
     implicit none
 
     integer :: status, file_unit, i, current_test = 1  ! Added current_test to track test number
+    INTEGER, PARAMETER :: UNIT_LST = 15
+    INTEGER, PARAMETER :: UNIT_DEL = 42
     logical :: file_exists, testing_complete
     character(len=100) :: command
     
     testing_complete = .false.
-    inquire(file='tabela.izl', exist=file_exists)
-    if (file_exists) then
-        open(unit=15, file='tabela.izl', status='old')
-        close(unit=15, status='delete')
-    end if
 
+    call delete_if_exists('tabela.izl',UNIT_DEL)
+    
     call testiran(status, testing_complete, current_test)
     if (status /= 0) then
         write(*,*) 'Greska u prvom pozivu testiran sabrutine, unesi 1 da nastavis testiranje sledeceg primera'
@@ -34,15 +33,11 @@
     end if
 
     do while (.not. testing_complete)
-        inquire(file='pak.lst', exist=file_exists)
-        if (file_exists) then
-            open(unit=15, file='pak.lst', status='old')
-            close(unit=15, status='delete')
-        end if
-        
-        call execute_command_line('del z*', wait=.true.)
-        call execute_command_line('del pak.unv', wait=.true.)
-        call execute_command_line('del pak.neu', wait=.true.)
+
+        call delete_if_exists('pak.lst',UNIT_LST)
+        call delete_if_exists('pak.unv',UNIT_DEL)
+        call delete_if_exists('pak.neu',UNIT_DEL)
+        call delete_files_prefix('Z')
 
         !command = 'test\pak < aa'
         command = 'PAKS < aa'
@@ -60,27 +55,26 @@
         end if
     end do
 
-    inquire(file='pak.lst', exist=file_exists)
-    if (file_exists) then
-        open(unit=15, file='pak.lst', status='old')
-        close(unit=15, status='delete')
-    end if
+    call delete_if_exists('pak.lst',UNIT_LST)
+    call delete_if_exists('pak.unv',UNIT_DEL)
+    call delete_if_exists('pak.neu',UNIT_DEL)
+    call delete_files_prefix('Z')
     
-    call execute_command_line('del z*', wait=.true.)
-    call execute_command_line('del pak.unv', wait=.true.)
-    call execute_command_line('del pak.neu', wait=.true.)
+    call delete_if_exists('aa',UNIT_DEL)
+    call delete_if_exists('CONTROL.SRE',UNIT_DEL)
+    call delete_if_exists('dijagram',UNIT_DEL)
+    call delete_if_exists('EGGOS',UNIT_DEL)
+    call delete_if_exists('GE0001.neu',UNIT_DEL)
+    call delete_if_exists('SE0001',UNIT_DEL)
+    call delete_if_exists('POMER1',UNIT_DEL)
+    call delete_if_exists('pak.neu',UNIT_DEL)
     
-    call execute_command_line('del aa', wait=.true.)
-    call execute_command_line('del CONTROL.SRE', wait=.true.)
-    call execute_command_line('del dijagram', wait=.true.)
-    call execute_command_line('del EGGOS', wait=.true.)
-    call execute_command_line('del fort.58', wait=.true.)
-    call execute_command_line('del GE0001.neu', wait=.true.)
-    call execute_command_line('del *.UNV', wait=.true.)
-    call execute_command_line('del SE0001', wait=.true.)
-    call execute_command_line('del POMER1', wait=.true.)
-    call execute_command_line('del fort.*', wait=.true.)
 
+    !call execute_command_line('del *.UNV', wait=.true.)
+!call execute_command_line('del fort.*', wait=.true.)
+    call delete_files_prefix('fort.')
+    call delete_files_sufix('.UNV')
+    
     end program paktest   
 
     subroutine testiran(status, testing_complete, current_test)
@@ -243,3 +237,60 @@
     END DO
         
     end subroutine testiran
+    
+    subroutine delete_if_exists(filename, UNIT_DEL)
+        character(len=*), intent(in) :: filename
+        INTEGER, intent(in) :: UNIT_DEL
+        logical :: exists
+        integer :: ios
+        inquire(file=filename, exist=exists)
+        if (exists) then
+            open(UNIT=UNIT_DEL, file=filename, status='old')!, iostat=ios)
+            !if (ios == 0) then
+                close(UNIT_DEL, status='delete', iostat=ios)
+            !end if
+        end if
+    end subroutine delete_if_exists
+    
+    subroutine delete_files_prefix(prefix)
+    character(len=*), intent(in) :: prefix
+    integer :: status
+    character(len=100) :: command
+    logical :: is_windows
+    call detect_os(is_windows)
+    if (is_windows) then      ! Windows version
+        command = 'del ' // trim(prefix) // '* /Q'
+    else        ! Linux/Unix version
+        command = 'rm -f ' // trim(prefix) // '*'
+    endif
+    call execute_command_line(command, wait=.true., exitstat=status)
+    end subroutine delete_files_prefix
+    
+    subroutine delete_files_sufix(sufix)
+    character(len=*), intent(in) :: sufix
+    integer :: status
+    character(len=100) :: command
+    logical :: is_windows
+    call detect_os(is_windows)
+    if (is_windows) then      ! Windows version
+        command = 'del *' // trim(sufix) // ' /Q'
+    else        ! Linux/Unix version
+        command = 'rm -f *' // trim(sufix)
+    endif
+    call execute_command_line(command, wait=.true., exitstat=status)
+    end subroutine delete_files_sufix
+    
+    subroutine detect_os(is_windows)
+    logical, intent(out) :: is_windows
+    character(256) :: os_name, windir
+    integer :: status
+    ! Try Windows-specific environment variable
+    call get_environment_variable('WINDIR', windir, status=status)
+    if (status == 0) then
+        is_windows = .true.
+        write(*,*) 'Detected Windows'
+        return
+    end if
+    ! If we get here, assume it's Unix/Linux
+    is_windows = .false.
+    end subroutine detect_os
