@@ -1,14 +1,10 @@
-!  paktest.f90 
-!
-!  FUNCTIONS:
-!  paktest - Entry point of console application.
-!
-
-!****************************************************************************
-!
-!  PROGRAM: paktest
-!
-!  PURPOSE:  Entry point for the console application.
+! ============================================================================
+! Name        : paktest.f90
+! Author      : mt
+! Version     :
+! Copyright   : Your copyright notice
+! Description :
+! ============================================================================
 !
 !****************************************************************************
 
@@ -22,13 +18,13 @@
     logical :: file_exists, testing_complete
     logical :: is_windows
     character(len=100) :: command
-    
+
     is_windows = .false.
     testing_complete = .false.
     call detect_os(is_windows)
 
     call delete_if_exists('tabela.izl',UNIT_DEL)
-    
+
     call testiran(status, testing_complete, current_test,is_windows)
     if (status /= 0) then
         write(*,*) 'Greska u prvom pozivu testiran sabrutine, unesi 1 da nastavis testiranje sledeceg primera'
@@ -48,13 +44,13 @@
             command = './PAKS < aa'
         endif
         !command = 'test\pak < aa'
-        
+
         call execute_command_line(command, wait=.true., exitstat=status)
         if (status /= 0) then
             write(*,*) 'Greska: PAK je negde crko, unesi 1 da nastavis testiranje sledeceg primera'
             read(*,*) i
         end if
-        
+
         current_test = current_test + 1  ! Increment test counter
         call testiran(status, testing_complete, current_test,is_windows)
         if (status /= 0) then
@@ -67,7 +63,7 @@
     call delete_if_exists('pak.unv',UNIT_DEL)
     call delete_if_exists('pak.neu',UNIT_DEL)
     call delete_files_prefix('Z',is_windows)
-    
+
     call delete_if_exists('aa',UNIT_DEL)
     call delete_if_exists('CONTROL.SRE',UNIT_DEL)
     call delete_if_exists('dijagram',UNIT_DEL)
@@ -76,26 +72,26 @@
     call delete_if_exists('SE0001',UNIT_DEL)
     call delete_if_exists('POMER1',UNIT_DEL)
     call delete_if_exists('pak.neu',UNIT_DEL)
-    
+
     call delete_files_prefix('fort.',is_windows)
     call delete_files_sufix('.UNV',is_windows)
-    
-    end program paktest   
+
+    end program paktest
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     subroutine testiran(status, testing_complete, current_test,is_windows)
-        
+
     IMPLICIT NONE
 
     !Variable declarations
     CHARACTER(LEN=256) :: line, valueOfLine, search_str, compare_str, lst_str, lst_result, s2
     CHARACTER(LEN=1) :: char, emptySpace
-    character(len=100) :: command, test_example
+    character(len=100) :: command, test_example,test_example_dot
     INTEGER :: i, numberOfLInes, current_hash_count, ios, test, red, startChar, endChar
     INTEGER, intent(in) :: current_test  ! Added current_test as input parameter
     logical, intent(in) :: is_windows
     LOGICAL :: file_exists
     LOGICAL, intent(inout) :: testing_complete
-    
+
     ! File units
     INTEGER, PARAMETER :: UNIT_AA = 10
     INTEGER, PARAMETER :: UNIT_IZL = 11
@@ -109,13 +105,13 @@
 
     lst_str = ''
 
-    INQUIRE(FILE='test/tabela.pod', EXIST=file_exists)
+    INQUIRE(FILE='test/TABELA.POD', EXIST=file_exists)
     IF (.NOT. file_exists) THEN
         status = 1
         RETURN
     END IF
-    
-    OPEN(UNIT=UNIT_POD, FILE='test/tabela.pod', STATUS='OLD', IOSTAT=ios)
+
+    OPEN(UNIT=UNIT_POD, FILE='test/TABELA.POD', STATUS='OLD', IOSTAT=ios)
     IF (ios /= 0) THEN
         status = 2
         RETURN
@@ -142,18 +138,18 @@
                 WRITE(UNIT_IZL, '(A)') TRIM(line(2:))
                 CLOSE(UNIT_IZL)
 
-                OPEN(UNIT=UNIT_AA, FILE='aa', STATUS='REPLACE')
-                if (is_windows) then      ! Windows version
-                    test_example = TRIM(line(2:))
-                else        ! Linux/Unix version
-                    test_example = TRIM(line(2:))
-                endif
-                WRITE(UNIT_AA, '(A)') TRIM(line(2:))
+                OPEN(UNIT=UNIT_AA, FILE='aa', STATUS='REPLACE')    
+                test_example = TRIM(line(2:))! Windows version
+                if (.not. is_windows) then
+                    call replace_backslash(test_example)! Linux/Unix version
+                end if
+                test_example = test_example(:len_trim(test_example)-1)
+                WRITE(UNIT_AA, '(A)') test_example
                 WRITE(UNIT_AA, '(A)') 'pak.lst'
                 WRITE(UNIT_AA, '(A)') 'pak.unv'
                 WRITE(UNIT_AA, '(A)') 'pak.neu'
                 CLOSE(UNIT_AA)
-                
+
                 red = 1
                 CLOSE(UNIT_POD)
                 EXIT
@@ -166,7 +162,7 @@
                     status = 3
                     RETURN
                 END IF
-                
+
                 OPEN(UNIT=UNIT_LST, FILE='pak.lst', STATUS='OLD', IOSTAT=ios)
                 IF (ios /= 0) THEN
                     CLOSE(UNIT_POD)
@@ -230,7 +226,7 @@
                     valueOfLine = TRIM(line(6:))
                     search_str = valueOfLine(3:LEN_TRIM(valueOfLine)-1)
                     red = red - 1
-                    DO 
+                    DO
                         READ(UNIT_LST, '(A)', IOSTAT=ios) s2
                         IF (ios /= 0) EXIT
                         red = red + 1
@@ -247,9 +243,9 @@
             END IF
         END IF
     END DO
-        
+
     end subroutine testiran
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!    
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     subroutine delete_if_exists(filename, UNIT_DEL)
         character(len=*), intent(in) :: filename
         INTEGER, intent(in) :: UNIT_DEL
@@ -263,7 +259,7 @@
             !end if
         end if
     end subroutine delete_if_exists
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!    
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     subroutine delete_files_prefix(prefix,is_windows)
     character(len=*), intent(in) :: prefix
     logical, intent(in) :: is_windows
@@ -277,7 +273,7 @@
     endif
     call execute_command_line(command, wait=.true., exitstat=status)
     end subroutine delete_files_prefix
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!    
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     subroutine delete_files_sufix(sufix,is_windows)
     character(len=*), intent(in) :: sufix
     logical, intent(in) :: is_windows
@@ -291,7 +287,7 @@
     endif
     call execute_command_line(command, wait=.true., exitstat=status)
     end subroutine delete_files_sufix
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!    
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     subroutine detect_os(is_windows)
     logical, intent(out) :: is_windows
     character(256) :: os_name, windir
@@ -307,3 +303,14 @@
     is_windows = .false.
     end subroutine detect_os
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    subroutine replace_backslash(str)
+    implicit none
+    character(len=*), intent(inout) :: str
+    integer :: i
+
+    do i = 1, len(trim(str))
+        if (str(i:i) == '\') then
+            str(i:i) = '/'
+        endif
+    end do
+    end subroutine replace_backslash
