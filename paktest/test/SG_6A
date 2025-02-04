@@ -1,0 +1,148 @@
+C /1/ HEADING CARD (80A1)
+C NASLOV
+SG_6A: Channel-section cantilever under concetrated load (beam superelement)
+C /2/ FORMAT FOR INPUT DATA(free format)
+C INDFOR
+    2
+C /3/ BASIC DATA FOR THE PROBLEM (5I5)
+C NP,NGELEM,NMATM,NPER,JPS
+   37    1    1    1
+C /4/ BASIC DATA FOR THE PROBLEM (6I2,3X,2I5)
+C (IOPGL(I),I=1,6),NDIN,ISOPS,ICVEL
+ 0 0 0 0 0 0  0    0    0    0    0
+C /5/ DATA FOR POST-PROCESSING (10I5)
+C NULAZ,NBLPR,NBLGR,ISTKO,NCVPR,ISTEM,ISTVN,ISTSI,ISTDE,ISTNA
+    0    0    0
+C /7/ DATA FOR RESTART (I5,10X,2I5,2F10.0)
+C IREST,       NMODS,ICCGG,    TOLG,    ALFAG
+    0    0.0
+C /8/ DATA FOR TIME STEPS (2I5,F10.0)
+C   I,NKDT(I),DTDT(I)    (I=1,NPER)
+    1   52    1.00
+C /9/ DATA FOR EQULIBRIUM ITERATIONS (5I5,3F10.0,10X,I5)
+C METOD,MAXIT,KONVE,KONVS,KONVM,TOLE,    TOLS,     TOLM,         NBRCR
+    3   99    1    0    0.000000010       0.        0.              0
+C /10/ INPUT NODAL DATA (I5,A1,6I2,2X,3F10.0,2I5)   (K=1,NP)
+C  N,CH,(ID(N,I),I=1,6),   (CORD(N,J),J=1,3),      KORC,INDS
+   37  0 0 0 0 0 0      0.0000    0.000   36.        -1
+    1  1 1 1 1 1 1      0.0000    0.000    0.         0
+C /11/ GENERAL DATA FOR MATERIAL MODELS (3I5)
+C-(MODEL(I,K),I=1,3)
+    1    1    1
+C /12/ DATA FOR EACH MATERIAL (2I5)
+C-MOD ,MAT
+    1    1
+C /12-1/ MATERIAL MODEL 1 (ELASTIC-ISOTROPIC) (two cards)
+C a) YOUNG'S MODULUS (F10.0)
+C-   E
+    1.0E07
+C b) POISSON'S RATIO (F10.0)
+C-   V
+    0.33
+C /13/ INPUT DATA FOR ELEMENT GROUP (8I5,3F10.0)    (I=1,NGELEM)
+C NETIP,NE,IATYP,NMODM,INDBTH,INDDTH,INDKOV,ICOEF,COEF1,COEF2,   COEF3
+    9   36    3    1    0    0    0    0    0.        0.        0.
+C /13-9/ DATA FOR A BEAM SUPERELEMENTS
+C a) First card with basic data for the element group (4I5,F10.0,30X,I5)
+C NGAUSX,NGAUSY,NGAUSZ,MSET,BETA,MSLOJ,                          IALFA
+    2    2    2                                                      2
+C b) Basic data about cross-section (8I5,3F10.0)
+C IPODT,NS,NCVP,NPRES,IND3D,NCFL,NPRL,IPOMT,CPP1,CPP2,CPP3
+    2   12   26    1    2    0    0    0        0.        0.        0.
+C 2/D segments in cross section data      (K=1,NS)
+C d1) current segment data (5I5,F10.0,I5)
+C NN,NMAT,IPRCO,ISNA,           THI,KORC,BTH,DTH
+C d2) nodal point data for the current segment (9I5)
+C (NOS(NM,NSEG),NM=1,NCVS)   (NCVS=4-for 2D SEGMENT)
+    1    1    0    1    0    0.              0.000     0.000
+    1    3    4    2
+    2    1    0    0    0    0.              0.000     0.000
+    3    5    6    4
+    3    1    0    0    0    0.              0.000     0.000
+    5    7    8    6
+    4    1    0    0    0    0.              0.000     0.000
+    9   11   12   10
+    5    1    0    0    0    0.              0.000     0.000
+   11   13   14   12
+    6    1    0    0    0    0.              0.000     0.000
+   13   15   16   14
+    7    1    0    0    0    0.              0.000     0.000
+   14   16   22   17
+    8    1    0    0    0    0.              0.000     0.000
+   17   22   23   18
+    9    1    0    0    0    0.              0.000     0.000
+   18   23   24   19
+   10    1    0    0    0    0.              0.000     0.000
+   19   24   25   20
+   11    1    0    0    0    0.              0.000     0.000
+   20   25   26   21
+   12    1    0    0    0    0.              0.000     0.000
+   21   26    7    5
+C e1) cross section global restrictions  (6I2,3X,4F10.0,I5)
+C (IOPGL(I),I=1,6),XYZ1,XYZ2,XYZ3,ALFAU,INDOF
+ 0 0 0 1 1 1
+C e2) cross section nodal data (I5,A1,6I2,2X,3F10.0,I5)   (K=1,NCVP)
+C NCV,CH,(IDP(NCV,NM),NM=1,6),(CORS(NCV,NM),NM=1,3),KORC,
+    8  0 1 0 1 1 1      -0.025    -0.025     0.000
+    6  1 1 1 1 1 1       0.025    -0.025     0.000
+    4  0 0 0 1 1 1       1.013    -0.025     0.000
+    2  0 0 0 1 1 1       2.000    -0.025     0.000
+    7  0 0 0 1 1 1      -0.025     0.025     0.000
+    5  0 0 0 1 1 1       0.025     0.025     0.000
+    3  0 0 0 1 1 1       1.013     0.025     0.000
+    1  0 0 0 1 1 1       2.000     0.025     0.000
+   26  0 0 0 1 1 1      -0.025     1.017     0.000
+   21  0 0 0 1 1 1       0.025     1.017     0.000
+   25  0 0 0 1 1 1      -0.025     2.008     0.000
+   20  0 0 0 1 1 1       0.025     2.008     0.000
+   24  0 0 1 1 1 1      -0.025     3.000     0.000
+   19  0 0 1 1 1 1       0.025     3.000     0.000
+   23  0 0 0 1 1 1      -0.025     3.992     0.000
+   18  0 0 0 1 1 1       0.025     3.992     0.000
+   22  0 0 0 1 1 1      -0.025     4.983     0.000
+   17  0 0 0 1 1 1       0.025     4.983     0.000
+   16  0 0 0 1 1 1      -0.025     5.975     0.000
+   14  0 0 0 1 1 1       0.025     5.975     0.000
+   12  0 0 0 1 1 1       1.013     5.975     0.000
+   10  0 0 0 1 1 1       2.000     5.975     0.000
+   15  0 0 0 1 1 1      -0.025     6.025     0.000
+   13  0 0 0 1 1 1       0.025     6.025     0.000
+   11  0 0 0 1 1 1       1.013     6.025     0.000
+    9  0 0 0 1 1 1       2.000     6.025     0.000
+C f1) beam superelement data (I5,15X,I5,F10.0,I5)   (NN=1,NE)
+C NN,                IPGS,THIBA,KORC
+C f2) nodal numbers,   section numbers,   restrictions      (9I5)
+C (NEL(NN,I),I=1,3),(NPRE(NN,J),J=1,3),(NOGR(NN,J),J=1,3)
+C f3) orientation point, cross section scale factors,orientation (6F10.0,I5) 
+C (COPT(NN,J),J=1,3),(FPRE(NN,J),J=1,3),NPOMT(NN)
+    1    1    0    0    0    1.       -1     0.0        0.0
+   37   36    0    1    1    1    0    0    0
+        1.        0.        0.        1.        1.        1.
+   36    1    0    0    0    1.        0     0.0        0.0
+    2    1    0    1    1    1    0    7    0
+        1.        0.        0.        1.        1.        1.
+C /14/ DATA FOR TIME FUNCTIONS (2I5)
+C NTABFT,MAXTFT
+    1   30
+C /14-1/ TIME FUNCTIONS   (IBR=1,NTABFT)
+C a) data about function in a table form (2I5)
+C IBR,IMAX    (IMAX.LE.MAXTFT)
+    1    8
+C b) values for argument - function (2F10.0)
+C ((FN(I,IBR,J),I=1,2),J=1,IMAX)
+        0.    0.025
+       10.    0.025 
+       11.    0.01 
+       15.    0.01 
+       16.    0.05 
+       35.    0.05 
+       36.    0.10 
+     1000.    0.10 
+C /15/ GENERAL DATA ABOUT LOADS (3I5,10X,5I5)
+C NCF,NPP2,NPP3,          NPLJ,NTEMP,NZADP,INDZS,ICERNE
+    0    0    0              0    0    1    0
+C /15-8/ PRESCRIBED DISPLACEMENT DATA (I=1,NZADP) (3I5,F10.0,I5)
+C   N,  IP,  NC,      FAK,KORC
+   37    2    1    1.        0
+C /16/ TERMINATED CARD (A4)	       'STOP'
+STOP

@@ -1,0 +1,99 @@
+C /1/ HEADING CARD (80A1)
+C NASLOV
+SE2_5: COOK'S PROBLEM - CANTILEVER WITH VARIABLE CROSS-SECTION
+C /2/ FORMAT FOR INPUT DATA(free format)
+C INDFOR
+    2
+C /3/ BASIC DATA FOR THE PROBLEM (4I5)
+C NP,NGELEM,NMATM,NPER,JPS
+    2    1    1    1    0
+C /4/ BASIC DATA FOR THE PROBLEM (6I2,3X,2I5)
+C (IOPGL(I),I=1,6),NDIN,ISOPS,ICVEL
+ 0 1 0 1 0 1       0    0    0
+C /5/ DATA FOR POST-PROCESSING (10I5)
+C NULAZ,NBLPR,NBLGR,ISTKO,NCVPR,ISTEM,ISTVN,ISTSI,ISTDE,ISTNA
+    0    0    0    0
+C /7/ DATA FOR RESTART (I5,10X,2I5,2F10.0)
+C IREST,       NMODS,ICCGG,    TOLG,    ALFAG
+    0              0    0        0.        0.
+C /8/ GROUP OF CARDS WITH DATA FOR TIME STEPS (2I5,F10.0)
+C   I,NKDT(I),DTDT(I)    (I=1,NPER)
+    1    1       1.0
+C /9/ DATA FOR EQULIBRIUM ITERATIONS (5I5,3F10.0,10X,I5)
+C METOD,MAXIT,KONVE,KONVS,KONVM,TOLE,    TOLS,     TOLM,         NBRCR
+    3   30    1    0    0.000000010        0.        0.              0
+C /10/ INPUT NODAL DATA (I5,A1,6I2,2X,3F10.0,2I5)   (K=1,NP)
+C  N,CH,(ID(N,I),I=1,6),   (CORD(N,J),J=1,3),      KORC,INDS
+    1  1 1 1 1 1 1      0.0000     .000    0.         0    0
+    2  0 1 0 1 0 1    -30.0000     .000   48.         0    0
+C /11/ DATA FOR MATERIAL MODELS (3I5)
+C (MODEL(I,K),I=1,3)    (K=1,NMATM)
+    1    1    1
+C /12/ DATA FOR MATERIAL (2I5,F10.0)    (J=1,MODEL(2,K))
+C MOD ,MAT,     GUST
+    1    1        0.
+C /12-1/ MATERIAL MODEL 1 (ELASTIC-ISOTROPIC) (two cards)
+C a) YOUNG'S MODULUS (F10.0)
+C    E
+   1.     
+C b) POISSON'S RATIO (F10.0)
+C    V
+.333333333
+C /13/ INPUT DATA FOR ELEMENT GROUP (8I5,3F10.0)    (I=1,NGELEM)
+C NETIP,NE,IATYP,NMODM,INDBTH,INDDTH,INDKOV,ICOEF,COEF1,COEF2,   COEF3
+    9    1    0    1    0    0    1    0        1.        1.        1.
+C /13-9/ DATA FOR A BEAM SUPERELEMENTS
+C a) First card with basic data for the element group (3I5,50X,I5)
+C NGAUSX,NGAUSY,NGAUSZ,                                          IALFA
+    2    2    2                                                      0
+C IPODT,NS,NCVP,NPRES,IND3D,NCFL,     IPOMT
+    1    1    2    2    2    2         0
+C 2D segments in cross section data      (K=1,NS)
+C c1) current element data (5I5,F10.0,I5)
+C NN,NMAT,IPRCO,ISNA,IPGS, THICK(A),KORC
+C c2) nodal point data for the current element (9I5)
+C (NOS(NM,NSEG),NM=1,NCVS)   (NCVS=1-for point element)
+    1    1    0    0    0    0.5       0       0.0       0.0
+    1    2
+C d) cross section global restrictions  (6I2)
+C (IOPGL(I),I=1,6)
+ 0 1 0 1 1 1
+C e) cross section nodal data (I5,A1,6I2,2X,3F10.0,2I5)   (K=1,NCVP)
+C NCV,CH,(IDP(NCV,NM),NM=1,6),(CORS(NCV,NM),NM=1,3),KORC,INDS
+    1  1 1 1 1 1 1   22.000000     .000    0.         0
+    2  0 1 1 1 1 1  -22.000000     .000    0.         0
+C d) cross section global restrictions  (6I2)
+C (IOPGL(I),I=1,6)
+ 0 1 0 1 1 1
+C e) cross section nodal data (I5,A1,6I2,2X,3F10.0,2I5)   (K=1,NCVP)
+C NCV,CH,(IDP(NCV,NM),NM=1,6),(CORS(NCV,NM),NM=1,3),KORC,INDS
+    1  1 1 1 1 1 1    8.000000     .000    0.         0
+    2  0 1 1 1 1 1   -8.000000     .000    0.         0
+C f1) beam element data (5I5,F10.0,I5)   (NN=1,NE)
+C NN,NMAT,IPRCO,ISNA,IPGS,RATIO(B/A),KORC
+C f2) nodal numbers,   section numbers,   restrictions      (9I5)
+C (NEL(NN,I),I=1,3),(NPRE(NN,J),J=1,3),(NOGR(NN,J),J=1,3)
+C f3) orientation point, cross section scale factors    (6F10.0) 
+C (COPT(NN,J),J=1,3),(FPRE(NN,J),J=1,3)                      
+    1    1    0    0    0    0.4100    0
+    2    1    0    2    1    1    0    7    0
+        1.        0.        0.        1.        1.        1.   -1
+C g) data about local concentrated loads (3I5,F10.0,3I5)
+C   N,  IP,  NC,     FAK, KORC, II,   NJ
+    1    1    1 5.00E-001    0    2    1
+    2    1    1 5.00E-001    0    2    1
+C /14/ DATA FOR TIME FUNCTIONS (2I5)
+C NTABFT,MAXTFT
+    1    2
+C a) data about function in a table form (2I5)
+C IBR,IMAX    (IMAX.LE.MAXTFT)
+    1    2
+C b) values for argument - function (2F10.0)
+C ((FN(I,IBR,J),I=1,2),J=1,IMAX)
+    0.        0.5
+  100.        0.5
+C /15/ GENERAL DATA ABOUT LOADS (3I5,10X,4I5)
+C NCF,NPP2,NPP3,          NPLJ,NTEMP,NZADP,INDZS
+    0    0    0              0    0    0    0
+C /16/ TERMINATED CARD (A4)       'STOP'
+STOP

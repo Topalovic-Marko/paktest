@@ -1,0 +1,458 @@
+C /1/ HEADING CARD (8A01)
+C NASLOV
+SG_8: ELASTO- PLASTIC ANALYSIS OF TRUSS ELEMENTS
+C /2/ FORMAT FOR INPUT DATA (free format)
+C INDFOR
+    2
+C /3/ BASIC DATA FOR THE PROBLEM (5I5)
+C NP,NGELEM,NMATM,NPER,JPS
+    3    1    1    1
+C /4/ BASIC DATA FOR THE PROBLEM (6I2,3X,3I5)
+C (IOPGL(I),I=1,6),NDIN,ISOPS,ICVEL
+ 0 1 1 1 1 1  0    0    0
+C /5/ DATA FOR POST-PROCESSING (10I5)
+C NULAZ,NBLPR,NBLGR,ISTKO,NCVPR,ISTEM,ISTVN,ISTSI,ISTDE,ISTNA
+   -1    0   -1
+C /7/ DATA FOR RESTART (I5,10X,2I5,2F10.0)
+C IREST,       NMODS,ICCGG,    TOLG,    ALFAG
+    0    0.0
+C /8/ DATA FOR TIME STEPS (2I5,F10.0)
+C   I,NKDT(I),DTDT(I)    (I=1,NPER)
+    1    5   1.
+C /9/ DATA FOR EQULIBRIUM ITERATIONS (5I5,3F10.0,10X,I5)
+C METOD,MAXIT,KONVE,KONVS,KONVM,TOLE,    TOLS,     TOLM,     TOLA,NBRCR
+    1   20    1    0    0     .0001    0.         0.
+C /10/ INPUT NODAL DATA (I5,A1,6I2,2X,3F10.0,2I5)   (K=1,NP)
+C  N,CH,(ID(N,I),I=1,6),   (CORD(N,J),J=1,3),      KORC,INDS
+    1  1 0 0 0 0 0      0.         0.        0.       0
+    2  0 0 0 0 0 0     10.         0.        0.       0
+    3  1 0 0 0 0 0     15.         0.        0.       0
+C /11/ DATA FOR MATERIAL MODELS (3I5)
+C (MODEL(I,K),I=1,3)    (K=1,NMATM)
+    5    1    1
+C /12/ DATA FOR MATERIAL (2I5,F10.0)
+C MOD  MAT     GUST
+    5    1
+C /12-5/ MATERIAL MODEL 5
+C a1) Number of points for definition strain-stress function (I5)
+C NTA
+    1
+C a2) Young's modulus and Poisson's ratio (2F10.0)
+C-       E         V
+    1.0D07       0.3
+C a3) Value of yield stress and strain (2F10.0)
+C-     TAU        ET
+    2.0D04    1.0D05
+C /13/ INPUT DATA FOR ELEMENT GROUP (8I5,3F10.0)    (I=1,NGELEM)
+C NETIP,NE,IATYP,NMODM,INDBTH,INDDTH,INDKOV,ICOEF,COEF1,COEF2,   COEF3
+    1    2    1    5                                                   E
+C a) Card with data for the current element (9I5)
+C NN,NMAT,ISNA,APR,KORC
+    1    1    0        1.    0                                         E
+C b) Card with nodal point data of the current element (2I5)
+C (NEL(NN,I),I=1,2)
+    1    2                                                             E
+    2    1    0        1.    0                                         E
+    2    3                                                             E
+C /14/ DATA FOR TIME FUNCTIONS (2I5)
+C NTABFT,MAXTFT
+    1    4
+C /14-1/ TIME FUNCTIONS   (IBR=1,NTABFT)
+C a) data about function in a table form (2I5)
+C IBR,IMAX    (IMAX.LE.MAXTFT)
+    1    4
+C b) values for argument - function (2F10.0)
+C ((FN(I,IBR,J),I=1,2),J=1,IMAX)
+    0.      0.
+    2.      4.
+    3.      2.
+   10.      2.
+C /15/ GENERAL DATA ABOUT LOADS (3I5,10X,5I5)
+C NCF,NPP2,NPP3,          NPLJ,NTEMP,NZADP,INDZS
+    1    0    0    0    0    0    0
+C /15-1/ CONCENTRATED LOADS DATA (3I5,F10.0,I5,F10.0)
+C    N   IP   NC   FAK     KORC
+    2    1    1    1.0D04  0
+C=======================================================================
+C /1/ HEADING CARD (8A01)
+C NASLOV
+SG_8: ELASTO- PLASTIC ANALYSIS OF TRUSS ELEMENTS/ MODIFIED NEWTON + AITKEN ACCELERATION
+C /2/ FORMAT FOR INPUT DATA (free format)
+C INDFOR
+    2
+C /3/ BASIC DATA FOR THE PROBLEM (5I5)
+C NP,NGELEM,NMATM,NPER,JPS
+    3    1    1    1
+C /4/ BASIC DATA FOR THE PROBLEM (6I2,3X,3I5)
+C (IOPGL(I),I=1,6),NDIN,ISOPS,ICVEL
+ 0 1 1 1 1 1  0    0    0
+C /5/ DATA FOR POST-PROCESSING (10I5)
+C NULAZ,NBLPR,NBLGR,ISTKO,NCVPR,ISTEM,ISTVN,ISTSI,ISTDE,ISTNA
+   -1    0   -1
+C /7/ DATA FOR RESTART (I5,10X,2I5,2F10.0)
+C IREST,       NMODS,ICCGG,    TOLG,    ALFAG
+    0    0.0
+C /8/ DATA FOR TIME STEPS (2I5,F10.0)
+C   I,NKDT(I),DTDT(I)    (I=1,NPER)
+    1    5   1.
+C /9/ DATA FOR EQULIBRIUM ITERATIONS (5I5,3F10.0,10X,I5)
+C METOD,MAXIT,KONVE,KONVS,KONVM,TOLE,    TOLS,     TOLM,     TOLA,NBRCR
+    2   20    1    0    0     .0001    0.         0.
+C /10/ INPUT NODAL DATA (I5,A1,6I2,2X,3F10.0,2I5)   (K=1,NP)
+C  N,CH,(ID(N,I),I=1,6),   (CORD(N,J),J=1,3),      KORC,INDS
+    1  1 0 0 0 0 0      0.         0.        0.       0
+    2  0 0 0 0 0 0     10.         0.        0.       0
+    3  1 0 0 0 0 0     15.         0.        0.       0
+C /11/ DATA FOR MATERIAL MODELS (3I5)
+C (MODEL(I,K),I=1,3)    (K=1,NMATM)
+    5    1    1
+C /12/ DATA FOR MATERIAL (2I5,F10.0)
+C MOD  MAT     GUST
+    5    1
+C /12-5/ MATERIAL MODEL 5
+C a1) Number of points for definition strain-stress function (I5)
+C NTA
+    1
+C a2) Young's modulus and Poisson's ratio (2F10.0)
+C-       E         V
+    1.0D07       0.3
+C a3) Value of yield stress and strain (2F10.0)
+C-     TAU        ET
+    2.0D04    1.0D05
+C /13/ INPUT DATA FOR ELEMENT GROUP (8I5,3F10.0)    (I=1,NGELEM)
+C NETIP,NE,IATYP,NMODM,INDBTH,INDDTH,INDKOV,ICOEF,COEF1,COEF2,   COEF3
+    1    2    1    5                                                   E
+C a) Card with data for the current element (9I5)
+C NN,NMAT,ISNA,APR,KORC
+    1    1    0        1.    0                                         E
+C b) Card with nodal point data of the current element (2I5)
+C (NEL(NN,I),I=1,2)
+    1    2                                                             E
+    2    1    0        1.    0                                         E
+    2    3                                                             E
+C /14/ DATA FOR TIME FUNCTIONS (2I5)
+C NTABFT,MAXTFT
+    1    4
+C /14-1/ TIME FUNCTIONS   (IBR=1,NTABFT)
+C a) data about function in a table form (2I5)
+C IBR,IMAX    (IMAX.LE.MAXTFT)
+    1    4
+C b) values for argument - function (2F10.0)
+C ((FN(I,IBR,J),I=1,2),J=1,IMAX)
+    0.      0.
+    2.      4.
+    3.      2.
+   10.      2.
+C /15/ GENERAL DATA ABOUT LOADS (3I5,10X,5I5)
+C NCF,NPP2,NPP3,          NPLJ,NTEMP,NZADP,INDZS
+    1    0    0    0    0    0    0
+C /15-1/ CONCENTRATED LOADS DATA (3I5,F10.0,I5,F10.0)
+C    N   IP   NC   FAK     KORC
+    2    1    1    1.0D04  0
+C=======================================================================
+C /1/ HEADING CARD (8A01)
+C NASLOV
+SG_8: ELASTO- PLASTIC ANALYSIS OF TRUSS ELEMENTS / FULL NEWTON
+C /2/ FORMAT FOR INPUT DATA (free format)
+C INDFOR
+    2
+C /3/ BASIC DATA FOR THE PROBLEM (5I5)
+C NP,NGELEM,NMATM,NPER,JPS
+    3    1    1    1
+C /4/ BASIC DATA FOR THE PROBLEM (6I2,3X,3I5)
+C (IOPGL(I),I=1,6),NDIN,ISOPS,ICVEL
+ 0 1 1 1 1 1  0    0    0
+C /5/ DATA FOR POST-PROCESSING (10I5)
+C NULAZ,NBLPR,NBLGR,ISTKO,NCVPR,ISTEM,ISTVN,ISTSI,ISTDE,ISTNA
+   -1    0   -1
+C /7/ DATA FOR RESTART (I5,10X,2I5,2F10.0)
+C IREST,       NMODS,ICCGG,    TOLG,    ALFAG
+    0    0.0
+C /8/ DATA FOR TIME STEPS (2I5,F10.0)
+C   I,NKDT(I),DTDT(I)    (I=1,NPER)
+    1    5   1.
+C /9/ DATA FOR EQULIBRIUM ITERATIONS (5I5,3F10.0,10X,I5)
+C METOD,MAXIT,KONVE,KONVS,KONVM,TOLE,    TOLS,     TOLM,     TOLA,NBRCR
+    3   20    1    0    0     .0001    0.         0.
+C /10/ INPUT NODAL DATA (I5,A1,6I2,2X,3F10.0,2I5)   (K=1,NP)
+C  N,CH,(ID(N,I),I=1,6),   (CORD(N,J),J=1,3),      KORC,INDS
+    1  1 0 0 0 0 0      0.         0.        0.       0
+    2  0 0 0 0 0 0     10.         0.        0.       0
+    3  1 0 0 0 0 0     15.         0.        0.       0
+C /11/ DATA FOR MATERIAL MODELS (3I5)
+C (MODEL(I,K),I=1,3)    (K=1,NMATM)
+    5    1    1
+C /12/ DATA FOR MATERIAL (2I5,F10.0)
+C MOD  MAT     GUST
+    5    1
+C /12-5/ MATERIAL MODEL 5
+C a1) Number of points for definition strain-stress function (I5)
+C NTA
+    1
+C a2) Young's modulus and Poisson's ratio (2F10.0)
+C-       E         V
+    1.0D07       0.3
+C a3) Value of yield stress and strain (2F10.0)
+C-     TAU        ET
+    2.0D04    1.0D05
+C /13/ INPUT DATA FOR ELEMENT GROUP (8I5,3F10.0)    (I=1,NGELEM)
+C NETIP,NE,IATYP,NMODM,INDBTH,INDDTH,INDKOV,ICOEF,COEF1,COEF2,   COEF3
+    1    2    1    5                                                   E
+C a) Card with data for the current element (9I5)
+C NN,NMAT,ISNA,APR,KORC
+    1    1    0        1.    0                                         E
+C b) Card with nodal point data of the current element (2I5)
+C (NEL(NN,I),I=1,2)
+    1    2                                                             E
+    2    1    0        1.    0                                         E
+    2    3                                                             E
+C /14/ DATA FOR TIME FUNCTIONS (2I5)
+C NTABFT,MAXTFT
+    1    4
+C /14-1/ TIME FUNCTIONS   (IBR=1,NTABFT)
+C a) data about function in a table form (2I5)
+C IBR,IMAX    (IMAX.LE.MAXTFT)
+    1    4
+C b) values for argument - function (2F10.0)
+C ((FN(I,IBR,J),I=1,2),J=1,IMAX)
+    0.      0.
+    2.      4.
+    3.      2.
+   10.      2.
+C /15/ GENERAL DATA ABOUT LOADS (3I5,10X,5I5)
+C NCF,NPP2,NPP3,          NPLJ,NTEMP,NZADP,INDZS
+    1    0    0    0    0    0    0
+C /15-1/ CONCENTRATED LOADS DATA (3I5,F10.0,I5,F10.0)
+C    N   IP   NC   FAK     KORC
+    2    1    1    1.0D04  0
+C=======================================================================
+C /1/ HEADING CARD (8A01)
+C NASLOV
+SG_8: ELASTO- PLASTIC ANALYSIS OF TRUSS ELEMENTS/FULL NEWTON + LINE SEARCH
+C /2/ FORMAT FOR INPUT DATA (free format)
+C INDFOR
+    2
+C /3/ BASIC DATA FOR THE PROBLEM (5I5)
+C NP,NGELEM,NMATM,NPER,JPS
+    3    1    1    1
+C /4/ BASIC DATA FOR THE PROBLEM (6I2,3X,3I5)
+C (IOPGL(I),I=1,6),NDIN,ISOPS,ICVEL
+ 0 1 1 1 1 1  0    0    0
+C /5/ DATA FOR POST-PROCESSING (10I5)
+C NULAZ,NBLPR,NBLGR,ISTKO,NCVPR,ISTEM,ISTVN,ISTSI,ISTDE,ISTNA
+   -1    0   -1
+C /7/ DATA FOR RESTART (I5,10X,2I5,2F10.0)
+C IREST,       NMODS,ICCGG,    TOLG,    ALFAG
+    0    0.0
+C /8/ DATA FOR TIME STEPS (2I5,F10.0)
+C   I,NKDT(I),DTDT(I)    (I=1,NPER)
+    1    5   1.
+C /9/ DATA FOR EQULIBRIUM ITERATIONS (5I5,3F10.0,10X,I5)
+C METOD,MAXIT,KONVE,KONVS,KONVM,TOLE,    TOLS,     TOLM,     TOLA,NBRCR
+    4   20    1    0    0     .0001    0.         0.
+C /10/ INPUT NODAL DATA (I5,A1,6I2,2X,3F10.0,2I5)   (K=1,NP)
+C  N,CH,(ID(N,I),I=1,6),   (CORD(N,J),J=1,3),      KORC,INDS
+    1  1 0 0 0 0 0      0.         0.        0.       0
+    2  0 0 0 0 0 0     10.         0.        0.       0
+    3  1 0 0 0 0 0     15.         0.        0.       0
+C /11/ DATA FOR MATERIAL MODELS (3I5)
+C (MODEL(I,K),I=1,3)    (K=1,NMATM)
+    5    1    1
+C /12/ DATA FOR MATERIAL (2I5,F10.0)
+C MOD  MAT     GUST
+    5    1
+C /12-5/ MATERIAL MODEL 5
+C a1) Number of points for definition strain-stress function (I5)
+C NTA
+    1
+C a2) Young's modulus and Poisson's ratio (2F10.0)
+C-       E         V
+    1.0D07       0.3
+C a3) Value of yield stress and strain (2F10.0)
+C-     TAU        ET
+    2.0D04    1.0D05
+C /13/ INPUT DATA FOR ELEMENT GROUP (8I5,3F10.0)    (I=1,NGELEM)
+C NETIP,NE,IATYP,NMODM,INDBTH,INDDTH,INDKOV,ICOEF,COEF1,COEF2,   COEF3
+    1    2    1    5                                                   E
+C a) Card with data for the current element (9I5)
+C NN,NMAT,ISNA,APR,KORC
+    1    1    0        1.    0                                         E
+C b) Card with nodal point data of the current element (2I5)
+C (NEL(NN,I),I=1,2)
+    1    2                                                             E
+    2    1    0        1.    0                                         E
+    2    3                                                             E
+C /14/ DATA FOR TIME FUNCTIONS (2I5)
+C NTABFT,MAXTFT
+    1    4
+C /14-1/ TIME FUNCTIONS   (IBR=1,NTABFT)
+C a) data about function in a table form (2I5)
+C IBR,IMAX    (IMAX.LE.MAXTFT)
+    1    4
+C b) values for argument - function (2F10.0)
+C ((FN(I,IBR,J),I=1,2),J=1,IMAX)
+    0.      0.
+    2.      4.
+    3.      2.
+   10.      2.
+C /15/ GENERAL DATA ABOUT LOADS (3I5,10X,5I5)
+C NCF,NPP2,NPP3,          NPLJ,NTEMP,NZADP,INDZS
+    1    0    0    0    0    0    0
+C /15-1/ CONCENTRATED LOADS DATA (3I5,F10.0,I5,F10.0)
+C    N   IP   NC   FAK     KORC
+    2    1    1    1.0D04  0
+C=======================================================================
+C /1/ HEADING CARD (8A01)
+C NASLOV
+SG_8: ELASTO- PLASTIC ANALYSIS OF TRUSS ELEMENTS / BFGS  
+C /2/ FORMAT FOR INPUT DATA (free format)
+C INDFOR
+    2
+C /3/ BASIC DATA FOR THE PROBLEM (5I5)
+C NP,NGELEM,NMATM,NPER,JPS
+    3    1    1    1
+C /4/ BASIC DATA FOR THE PROBLEM (6I2,3X,3I5)
+C (IOPGL(I),I=1,6),NDIN,ISOPS,ICVEL
+ 0 1 1 1 1 1  0    0    0
+C /5/ DATA FOR POST-PROCESSING (10I5)
+C NULAZ,NBLPR,NBLGR,ISTKO,NCVPR,ISTEM,ISTVN,ISTSI,ISTDE,ISTNA
+   -1    0   -1
+C /7/ DATA FOR RESTART (I5,10X,2I5,2F10.0)
+C IREST,       NMODS,ICCGG,    TOLG,    ALFAG
+    0    0.0
+C /8/ DATA FOR TIME STEPS (2I5,F10.0)
+C   I,NKDT(I),DTDT(I)    (I=1,NPER)
+    1    5   1.
+C /9/ DATA FOR EQULIBRIUM ITERATIONS (5I5,3F10.0,10X,I5)
+C METOD,MAXIT,KONVE,KONVS,KONVM,TOLE,    TOLS,     TOLM,     TOLA,NBRCR
+    5   20    1    0    0     .0001    0.         0.
+C /10/ INPUT NODAL DATA (I5,A1,6I2,2X,3F10.0,2I5)   (K=1,NP)
+C  N,CH,(ID(N,I),I=1,6),   (CORD(N,J),J=1,3),      KORC,INDS
+    1  1 0 0 0 0 0      0.         0.        0.       0
+    2  0 0 0 0 0 0     10.         0.        0.       0
+    3  1 0 0 0 0 0     15.         0.        0.       0
+C /11/ DATA FOR MATERIAL MODELS (3I5)
+C (MODEL(I,K),I=1,3)    (K=1,NMATM)
+    5    1    1
+C /12/ DATA FOR MATERIAL (2I5,F10.0)
+C MOD  MAT     GUST
+    5    1
+C /12-5/ MATERIAL MODEL 5
+C a1) Number of points for definition strain-stress function (I5)
+C NTA
+    1
+C a2) Young's modulus and Poisson's ratio (2F10.0)
+C-       E         V
+    1.0D07       0.3
+C a3) Value of yield stress and strain (2F10.0)
+C-     TAU        ET
+    2.0D04    1.0D05
+C /13/ INPUT DATA FOR ELEMENT GROUP (8I5,3F10.0)    (I=1,NGELEM)
+C NETIP,NE,IATYP,NMODM,INDBTH,INDDTH,INDKOV,ICOEF,COEF1,COEF2,   COEF3
+    1    2    1    5                                                   E
+C a) Card with data for the current element (9I5)
+C NN,NMAT,ISNA,APR,KORC
+    1    1    0        1.    0                                         E
+C b) Card with nodal point data of the current element (2I5)
+C (NEL(NN,I),I=1,2)
+    1    2                                                             E
+    2    1    0        1.    0                                         E
+    2    3                                                             E
+C /14/ DATA FOR TIME FUNCTIONS (2I5)
+C NTABFT,MAXTFT
+    1    4
+C /14-1/ TIME FUNCTIONS   (IBR=1,NTABFT)
+C a) data about function in a table form (2I5)
+C IBR,IMAX    (IMAX.LE.MAXTFT)
+    1    4
+C b) values for argument - function (2F10.0)
+C ((FN(I,IBR,J),I=1,2),J=1,IMAX)
+    0.      0.
+    2.      4.
+    3.      2.
+   10.      2.
+C /15/ GENERAL DATA ABOUT LOADS (3I5,10X,5I5)
+C NCF,NPP2,NPP3,          NPLJ,NTEMP,NZADP,INDZS
+    1    0    0    0    0    0    0
+C /15-1/ CONCENTRATED LOADS DATA (3I5,F10.0,I5,F10.0)
+C    N   IP   NC   FAK     KORC
+    2    1    1    1.0D04  0
+C=======================================================================
+C /1/ HEADING CARD (8A01)
+C NASLOV
+SG_8: ELASTO- PLASTIC ANALYSIS OF TRUSS ELEMENTS /CONSTANT ARC LENGTH + MODIFIED NEWTON
+C /2/ FORMAT FOR INPUT DATA (free format)
+C INDFOR
+    2
+C /3/ BASIC DATA FOR THE PROBLEM (5I5)
+C NP,NGELEM,NMATM,NPER,JPS
+    3    1    1    1
+C /4/ BASIC DATA FOR THE PROBLEM (6I2,3X,3I5)
+C (IOPGL(I),I=1,6),NDIN,ISOPS,ICVEL
+ 0 1 1 1 1 1  0    0    0
+C /5/ DATA FOR POST-PROCESSING (10I5)
+C NULAZ,NBLPR,NBLGR,ISTKO,NCVPR,ISTEM,ISTVN,ISTSI,ISTDE,ISTNA
+   -1    0   -1
+C /7/ DATA FOR RESTART (I5,10X,2I5,2F10.0)
+C IREST,       NMODS,ICCGG,    TOLG,    ALFAG
+    0    0.0
+C /8/ DATA FOR TIME STEPS (2I5,F10.0)
+C   I,NKDT(I),DTDT(I)    (I=1,NPER)
+    1    5   1.
+C /9/ DATA FOR EQULIBRIUM ITERATIONS (5I5,3F10.0,10X,I5)
+C METOD,MAXIT,KONVE,KONVS,KONVM,TOLE,    TOLS,     TOLM,     TOLA,NBRCR
+   61   20    1    0    0     .0001    0.         0.
+C /9-1/ DATA FOR AUTOMATIC LOAD STEPPING (3I5,3F10.0)
+C ITEOPT,KPNOD,KPDIR,DTUK,ALFG,DELS 
+    6    2    1  0.006667        1.        1.
+C /10/ INPUT NODAL DATA (I5,A1,6I2,2X,3F10.0,2I5)   (K=1,NP)
+C  N,CH,(ID(N,I),I=1,6),   (CORD(N,J),J=1,3),      KORC,INDS
+    1  1 0 0 0 0 0      0.         0.        0.       0
+    2  0 0 0 0 0 0     10.         0.        0.       0
+    3  1 0 0 0 0 0     15.         0.        0.       0
+C /11/ DATA FOR MATERIAL MODELS (3I5)
+C (MODEL(I,K),I=1,3)    (K=1,NMATM)
+    5    1    1
+C /12/ DATA FOR MATERIAL (2I5,F10.0)
+C MOD  MAT     GUST
+    5    1
+C /12-5/ MATERIAL MODEL 5
+C a1) Number of points for definition strain-stress function (I5)
+C NTA
+    1
+C a2) Young's modulus and Poisson's ratio (2F10.0)
+C-       E         V
+    1.0D07       0.3
+C a3) Value of yield stress and strain (2F10.0)
+C-     TAU        ET
+    2.0D04    1.0D05
+C /13/ INPUT DATA FOR ELEMENT GROUP (8I5,3F10.0)    (I=1,NGELEM)
+C NETIP,NE,IATYP,NMODM,INDBTH,INDDTH,INDKOV,ICOEF,COEF1,COEF2,   COEF3
+    1    2    1    5                                                   E
+C a) Card with data for the current element (9I5)
+C NN,NMAT,ISNA,APR,KORC
+    1    1    0        1.    0                                         E
+C b) Card with nodal point data of the current element (2I5)
+C (NEL(NN,I),I=1,2)
+    1    2                                                             E
+    2    1    0        1.    0                                         E
+    2    3                                                             E
+C /14/ DATA FOR TIME FUNCTIONS (2I5)
+C NTABFT,MAXTFT
+    1    2
+C /14-1/ TIME FUNCTIONS   (IBR=1,NTABFT)
+C a) data about function in a table form (2I5)
+C IBR,IMAX    (IMAX.LE.MAXTFT)
+    1    2
+C b) values for argument - function (2F10.0)
+C ((FN(I,IBR,J),I=1,2),J=1,IMAX)
+    0.      1.
+   10.      1.
+C /15/ GENERAL DATA ABOUT LOADS (3I5,10X,5I5)
+C NCF,NPP2,NPP3,          NPLJ,NTEMP,NZADP,INDZS
+    1    0    0    0    0    0    0
+C /15-1/ CONCENTRATED LOADS DATA (3I5,F10.0,I5,F10.0)
+C    N   IP   NC   FAK     KORC
+    2    1    1        1.  0
+C /16/ TERMINATED CARD (A4)       'STOP'
+STOP

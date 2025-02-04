@@ -1,0 +1,67 @@
+C NASLOV
+CIS10: POSTBUCKLING OF A COLUMN  Pcr=E*I*(PI/2L)**2   ( I=(b*h**3)/12 )
+C INDFOR
+    2
+C NP,NGELEM,NMATM,NPER
+   33    1    1    1
+C (IOPGL(I),I=1,6),KOSI,NDIN,ITEST
+ 0 1 0 1 0 1  0    0    0
+C NULAZ,NBLPR,NBLGR
+    0    0    0
+C  STAMPA
+C  BLOK,KORP,DKOR,KORZ,IND
+C  GRAFIKA
+C  BLOK,KORP,DKOR,KORZ,IND
+C IREST,TSTART
+    1    0.0       1
+    1   33    3   0.1 
+C*NPER,NKOR,DT
+    1    7  1.0
+C*METOD,MAXIT,KONVE,KONVS,KONVM,TOLE,TOLS,TOLM
+   63   20    1    0    0   0.0001        0.        0.
+    6   33    1   -0.003        5.        5.
+C-CVOR,OGRANICENJA,   K O O R D I N A T E      ,  KORAK GEN.
+    4                    1.       0.                  5
+   29                   11.       0.
+    5                    1.       1.                  5
+   30                   11.       1.
+   31                   12.       0.                 -5
+    1  1 1 1 1 1 1       0.       0.     
+   32                   12.       .5                 -5
+    2  1 1 1 1 1 1       0.       .5
+   33                   12.       1.                 -5  
+    3  1 1 1 1 1 1       0.       1.
+C-MODEL,BR.MAT,MAX.TAC.
+    1    1    1
+C-MODEL,MATER
+    1    1
+C-      EX
+    1.8E03
+C-     VXY
+       0.0
+C ULAZNI PODACI ZA ELEMENTE
+C NTIP,NE,IATYP,NMODM
+    8    6    3    1
+C NGAUSX,NGAUSY,NGAUSZ,MSET,BETA
+    2    2    2    
+C N,MAT,IPRCO,ISNAP,IPGCT,THICK,KORC
+    1    1    0    1    0    1.        5
+    8    3    1    6    5    2    4    7    0
+    6    1    0    1    0    1.        0
+   33   28   26   31   30   27   29   32    0
+C VREMENSKE FUNKCIJE
+C NTABFT,MAXTFT
+    1    2
+C IBR,IMAX
+    1    2
+C VREME,FUNKCIJA
+    0.      1.
+  100.      1.
+C NCF,NPP2,NPP3,NPGR,NPGRI,NPLJ,NTEMP
+    3    0    0    0    0    0    0
+C N,IP,NC,FAK,KORC
+   33    1    1  -.1667   0
+   32    1    1  -.6667   0  
+   31    1    1  -.1667   0 
+STOP
+

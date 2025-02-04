@@ -1,3 +1,12 @@
+# ============================================================================
+# Name        : Makefile
+# Author      : mt
+# Version     :
+# Copyright   : Your copyright notice
+# Description : Makefile for Hello World in Fortran
+# ============================================================================
+# Makefile for paktest program
+
 # Compiler
 FC = ifort
 
@@ -5,7 +14,7 @@ FC = ifort
 FFLAGS = -O2 -g
 
 # Source file
-SRC = paktest.F90
+SRC = paktest.f90
 
 # Executable name
 EXEC = paktest

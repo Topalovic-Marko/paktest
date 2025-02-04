@@ -138,12 +138,13 @@
                 WRITE(UNIT_IZL, '(A)') TRIM(line(2:))
                 CLOSE(UNIT_IZL)
 
-                OPEN(UNIT=UNIT_AA, FILE='aa', STATUS='REPLACE')    
-                test_example = TRIM(line(2:))! Windows version
-                if (.not. is_windows) then
-                    call replace_backslash(test_example)! Linux/Unix version
-                end if
-                test_example = test_example(:len_trim(test_example)-1)
+                OPEN(UNIT=UNIT_AA, FILE='aa', STATUS='REPLACE')
+                    test_example = TRIM(line(2:)) ! Windows version
+                if (is_windows.EQ.(.false.)) then
+                    call replace_backslash(test_example) ! Linux/Unix version
+                    test_example_dot = trim(test_example)
+                    test_example = test_example_dot(:len(trim(test_example_dot)) -1)
+                endif
                 WRITE(UNIT_AA, '(A)') test_example
                 WRITE(UNIT_AA, '(A)') 'pak.lst'
                 WRITE(UNIT_AA, '(A)') 'pak.unv'

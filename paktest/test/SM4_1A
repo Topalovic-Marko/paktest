@@ -1,0 +1,220 @@
+C /1/ HEADING CARD (80A1)
+C NASLOV
+SM4_1: THERMAL LOADING OF CROSS-PLY LAMINATES
+C /2/ FORMAT FOR INPUT DATA(free format)
+C INDFOR
+    2
+C /3/ BASIC DATA FOR THE PROBLEM (4I5)
+C NP,NGELEM,NMATM,NPER,JPS
+    4    1    3    1
+C /4/ BASIC DATA FOR THE PROBLEM (6I2,3X,2I5)
+C (IOPGL(I),I=1,6),     NDIN,ITEST,ICVEL
+ 0 0 1 1 1 1  0    0    0    0    0
+C /5/ DATA FOR POST-PROCESSING (10I5)
+C NULAZ,NBLPR,NBLGR,ISTKO,NCVPR,ISTEM,ISTVN,ISTSI,ISTDE,ISTNA
+    0    0    0    0
+C    0    0   -1    2
+C /7/ DATA FOR RESTART (I5,10X,2I5,2F10.0)
+C IREST,       NMODS,ICCGG,    TOLG,    ALFAG
+    0    0.0
+C /8/ GROUP OF CARDS WITH DATA FOR TIME STEPS (2I5,F10.0)
+C   I,NKDT(I),DTDT(I)    (I=1,NPER)
+    1    1   1.
+C /9/ DATA FOR EQULIBRIUM ITERATIONS (5I5,3F10.0,10X,I5)
+C METOD,MAXIT,KONVE,KONVS,KONVM,TOLE,    TOLS,     TOLM,     TOLA,NBRCR
+    0    0    0    0    0    0.        0.         0.
+C /10/ GROUP OF CARDS FOR NODAL POINT DATA (A1,I4,1X,6I2,2X,3F10.2,I5)
+C  N,CH,(ID(N,I),I=1,6),   (CORD(N,J),J=1,3),      KORC,INDS
+    1  0 0 0 0 0 0      2.         2.        0.       0
+    2  1 0 0 0 0 0      0.         2.        0.       0
+    3  1 1 0 0 0 0      0.         0.        0.       0
+    4  0 1 0 0 0 0      2.         0.        0.       0
+C /11/ GENERAL DATA FOR MATERIAL MODELS (3I5)
+C (MODEL(I,K),I=1,3)    (K=1,NMATM)
+    2    1    1
+    3    1    2
+    4    1    2
+C /12/ DATA FOR EACH MATERIAL (2I5,F10.0)
+C MATERIAL MODEL, MATERIAL NUMBER, DENSITY (2I5,F10.0)
+C MOD  MAT      GUST
+    2    1
+C /12-2/ MATERIAL MODEL 2 (ELASTIC-ANISOTROPIC) (three cards)
+C a) YOUNG'S MODULUS (3F10.0)
+C-  EX        EY        EZ
+   7.80E06   2.63E06   2.63E06
+C b) POISSON'S RATIO (3F10.0)
+C- VXY       VYZ       VZX
+      0.25      0.25      0.25       
+C c) SHEAR MODULUS (3F10.0)
+C- GXY       GYZ       GZX
+   1.25E06   1.25E06   1.25E06
+C /12/ DATA FOR EACH MATERIAL (2I5,F10.0)
+C MATERIAL MODEL, MATERIAL NUMBER, DENSITY (2I5,F10.0)
+C MOD  MAT      GUST
+    3    1
+C /12-3/ MATERIAL MODEL 3 (LINEAR THERMO-ELASTIC ISOTROPIC)
+C NUMBER OF POINTS FOR CURVE "TEMPERATURE-YOUNGS MODULUS" (I5)
+C NTA(E)
+    2
+C TEMPERATURE, YOUNGS MODULUS (2F10.0)
+C        T         E
+        0.   7.80E06
+      100.   7.80E06
+C NUMBER OF POINTS FOR CURVE "TEMPERATURE-POISSONS RATIO" (I5)
+C NTA(V)
+    2
+C TEMPERATURE, POISSONS RATIO (2F10.0)
+C        T         V
+        0.       .25
+      100.       .25
+C NUMBER OF POINTS FOR CURVE "TEMPERATURE-COEFF. OF THERMALS EXPANSION" (I5)
+C NTA(A)
+    2
+C TEMPERATURE, COEFFICIENT OF THERMALS EXPANSION (2F10.0)
+C        T         A
+        0.  11.4E-06
+      100.  11.4E-06
+C REFERENCE TEMPERATURE (F10.0)
+C     TREF
+       20.
+C /12/ DATA FOR EACH MATERIAL (2I5,F10.0)
+C MATERIAL MODEL, MATERIAL NUMBER, DENSITY (2I5,F10.0)
+C MOD  MAT      GUST
+    4    1
+C /12-4/ MATERIAL MODEL 4 (THERMO-ELASTIC-ANISOTROPIC) 
+C a1-1)Number of points for definition of elastic modulus in direction X Ex(T)
+C    NTFUN
+    2
+C a1-2) Values of argument (T) and function for elastic modulus (Ex)
+C-      T         EX
+        0.   7.80E06
+      100.   7.80E06
+C a2-1)Number of points for definition of elastic modulus in direction Y Ey(T)
+C    NTFUN
+    2
+C a2-2) Values of argument (T) and function for elastic modulus (Ey)
+C-      T         EY
+        0.   2.63E06
+      100.   2.63E06
+C a3-1)Number of points for definition of elastic modulus in direction Z Ez(T)
+C    NTFUN
+    2
+C a3-2) Values of argument (T) and function for elastic modulus (Ez)
+C-      T         EZ
+        0.   2.63E06
+      100.   2.63E06
+C b1-1)Number of points for definition of Poisson's raio in plane XY vxy(T)
+C    NTFUN
+    2
+C b1-2) Values of argument (T) and function for Poisson's ratio (vxy)
+C-      T        VXY
+        0.       .25
+      100.       .25
+C b2-1)Number of points for definition of Poisson's raio in plane YZ vyz(T)
+C    NTFUN
+    2
+C b2-2) Values of argument (T) and function for Poisson's ratio (vyz)
+C-      T        VYZ
+        0.       .25
+      100.       .25
+C b3-1)Number of points for definition of Poisson's raio in plane ZX vzx(T)
+C    NTFUN
+    2
+C b3-2) Values of argument (T) and function for Poisson's ratio (vzx)
+C-      T        VZX
+        0.       .25
+      100.       .25
+C c1-1)Number of points for definition of shear modulus in plane XY Gxy(T)
+C    NTFUN
+    2
+C c1-2) Values of argument (T) and function for shear modulus (Gxy)
+C-      T        GXY
+        0.   1.25E06
+      100.   1.25E06
+C c2-1)Number of points for definition of shear modulus in plane YZ Gyz(T)
+C    NTFUN
+    2
+C c2-2) Values of argument (T) and function for shear modulus (Gyz)
+C-      T         GYZ
+        0.   1.25E06
+      100.   1.25E06
+C c3-1)Number of points for definition of shear modulus in plane ZX Gzx(T)
+C    NTFUN
+    2
+C c3-2) Values of argument (T) and function for shear modulus (Gzx)
+C-      T         GZX
+        0.   1.25E06
+      100.   1.25E06
+C d1-1)Number of points for definition of thermal expansion coef. in direction X 
+C    NTFUN
+    2
+C d1-2) Values of argument (T) and function for thermal expansion coefficient
+C-      T      ALFAX
+        0.   3.5E-06
+      100.   3.5E-06
+C d2-1)Number of points for definition of thermal expansion coef. in direction Y
+C    NTFUN
+    2
+C d2-2) Values of argument (T) and function for thermal expansion coefficient
+C-      T      ALFAY
+        0.  11.4E-06
+      100.  11.4E-06
+C d3-1)Number of points for definition of thermal expansion coef. in direction Z
+C    NTFUN
+    2
+C d3-2) Values of argument (T) and function for thermal expansion coefficient
+C-      T      ALFAZ
+        0.  11.4E-06
+      100.  11.4E-06
+C REFERENCE TEMPERATURE (F10.0)
+C-    TREF
+       20.
+C /13/ INPUT DATA FOR ELEMENT GROUP (8I5,3F10.0)    (I=1,NGELEM)
+C NETIP,NE,IATYP,NMODM,INDBTH,INDDTH,INDKOV,ICOEF,COEF1,COEF2,   COEF3
+C    8    1    0    2
+    8    1    1    4
+C /13-8/ DATA FOR ISOPARAMETRIC SHELL
+C a) First card with basic data for the element group (4I5,F10.0,I5,3F10.0,I5)
+C NGAUSX,NGAUSY,NGAUSZ,MSET,BETA,MSLOJ,CPP(1),CPP(2),CPP(3),IALFA
+    0    2   -2    1
+C a1) Card with data about number of layers in the laminate (I5)
+C NSLOJ(I)
+    3
+C a2) Card with data about layers of the laminate
+C MATSL(I,J),DSLOJ(J,I),BBET(J,I)
+    1.083333333        0.
+    1.833333333       90.
+    1.083333333        0.
+C b) card with nodal point data of the current element (5I5,F10.0,I5)
+C NN,NMAT,IPRCO,ISNA,IPGS, THI,      KORC
+    1    1    0    2    0    1.        0
+C c) Card with nodal point data for the current element (9i5)
+C (NEL(NN,I),I=1,9)                      
+    1    2    3    4    0    0    0    0    0
+C /14/ DATA ABOUT TIME FUNCTIONS (4I5)
+C NTABFT,MAXTFT
+    1    2
+C /14-1/ GROUP OF CARDS WITH TABLES FOR TIME FUNCTIONS
+C a) data about function in a table form (2I5)
+C IBR,IMAX                       IBR=1,NTABFT 
+    1    2
+C b) values for argument - function (2F10.0)
+C (FN(I,IBR,J),I=1,2)              J=1,IMAX
+    0.      1.
+   10.      1.
+C /15/ GENERAL DATA ABOUT LOADS (3I5.10X,3I5)
+C NCF,NPP2,NPP3,           NPLJ,NTEMP,NZADP
+    2    0    0    0    0    0    4    0
+C /15-1/ CONCENTRATED LOADS DATA (3I5,F10.2,I5)           I=1,NCF
+C   N,  IP,  NC,  FAK,     KORC
+    1    1    1    1.0E00    0
+    4    1    1    1.0E00    0
+C /15-7/ DATA FOR TEMPERATURES (2I5,F10.0,I5)
+C   N   NC       FAK KORC
+    1    1       21.    0
+    2    1       21.    0
+    3    1       21.    0
+    4    1       21.    0
+C /16/ TERMINATED CARD (A4)	       'STOP'
+STOP
+

@@ -1,0 +1,78 @@
+C /1/ HEADING CARD (80A1)
+C NASLOV
+SG_3D: LARGE DISPLACEMENT OF 45-DEGREE BEND (SHELL ELEMENT) (a)
+C /2/ FORMAT FOR INPUT DATA(free format)
+C INDFOR
+    2
+C /3/ BASIC DATA FOR THE PROBLEM (5I5)
+C NP,NGELEM,NMATM,NPER,JPS
+   34    1    1    1
+C /4/ BASIC DATA FOR THE PROBLEM (6I2,3X,3I5)
+C (IOPGL(I),I=1,6),NDIN,ISOPS,ICVEL
+ 0 0 0 0 0 1  0    0    0    0    0
+C /5/ DATA FOR POST-PROCESSING (10I5)
+C NULAZ,NBLPR,NBLGR,ISTKO,NCVPR,ISTEM,ISTVN,ISTSI,ISTDE,ISTNA
+    0    0    0
+C /7/ DATA FOR RESTART (I5,10X,2I5,2F10.0)
+C IREST,       NMODS,ICCGG,    TOLG,    ALFAG
+    0    0.0
+C /8/ DATA FOR TIME STEPS (2I5,F10.0)
+C   I,NKDT(I),DTDT(I)    (I=1,NPER)
+    1    2  30.00
+C /9/ DATA FOR EQULIBRIUM ITERATIONS (5I5,3F10.0,10X,I5)
+C METOD,MAXIT,KONVE,KONVS,KONVM,TOLE,    TOLS,     TOLM,         NBRCR
+    4   99    1    0    0.000000001      0.       0.
+C /10/ INPUT NODAL DATA (I5,A1,6I2,2X,3F10.0,2I5)   (K=1,NP)
+C  N,CH,(ID(N,I),I=1,6),   (CORD(N,J),J=1,3),      KORC,INDS
+   33P 0 0 0 0 0 0    100.0000   45.000   -0.5       -2
+    1P 1 1 1 1 1 1    100.0000   90.000   -0.5        0
+   34P 0 0 0 0 0 0    100.0000   45.000    0.5       -2
+    2P 1 1 1 1 1 1    100.0000   90.000    0.5        0
+C /11/ GENERAL DATA FOR MATERIAL MODELS (3I5)
+C-(MODEL(I,K),I=1,3)
+    1    1    1
+C /12/ DATA FOR EACH MATERIAL (2I5)
+C-MOD ,MAT
+    1    1
+C /12-1/ MATERIAL MODEL 1 (ELASTIC-ISOTROPIC) (two cards)
+C a) YOUNG'S MODULUS (F10.0)
+C-   E
+    1.0E07
+C b) POISSON'S RATIO (F10.0)
+C-   V
+    0.0
+C /13/ INPUT DATA FOR ELEMENT GROUP (8I5,3F10.0)    (I=1,NGELEM)
+C NETIP,NE,IATYP,NMODM,INDBTH,INDDTH,INDKOV,ICOEF,COEF1,COEF2,   COEF3
+   84   16    3    1                            0.        0.        1.
+C /13-8/ DATA FOR ISOPARAMETRIC SHELL  (NN=1,NE)
+C a) First card wiht basic data for the element group (4I5,F10.0,I5,3F10.0,I5)
+C NAGAUSX,NGAUSY,NGAUSZ,MSET,BETA,MSLOJ,(CPP(I),I=1,3),          IALFA
+    2    2    2                                                      0
+C b) Card wiht data for the current element (5I5,F10.0,I5,2F10.0)
+C NN,NMAT,IPRCO,ISNA,IPGS,THI,KORC,BTH,DTH
+C c) Card with nodal point data for the cuurent element (9I5)
+C (NEL(NN,I),I=1,K)
+    1    1    0    1    0    1.0000    2
+    4    2    1    3
+   16    1    0    0    0    1.0000    0
+   34   32   31   33
+C /14/ DATA ABOUT TIME FUNCTIONS (4I5)
+C NTABFT,MAXTFT
+    1    2
+C /14-1/ GROUP OF CARDS WITH TABLES FOR TIME FUNCTIONS
+C a) data about function in a table form (2I5)
+C IBR,IMAX
+    1    2
+C b) values for argument - function (2F10.0)
+C (FN(I,IBR,J),I=1,2)              J=1,NTABFT
+    0.        0.
+   60.      600.
+C /15/ GENERAL DATA ABOUT LOADS (3I5,10X,5I5)
+C NCF,NPP2,NPP3,          NPLJ,NTEMP,NZADP,INDZS,ICERNE
+    2    0    0    0    0    0    0
+C /15-1/ CONCENTRATED LOADS DATA (3I5,F10.0,I5,F10.0) (I=1,NCF)
+C   N   IP   NC   FAK     KORC      FPOM
+   33    3    1 0.50         0
+   34    3    1 0.50         0
+C /16/ TERMINATED CARD (A4)	       'STOP'
+STOP

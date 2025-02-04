@@ -1,0 +1,306 @@
+#test\SE8_1A2.
+	find "S T E"
+	down  1
+	find "S T E"
+	down 10
+	read 38 47
+	comp "3.3866E-01"
+#test\SE8_1B2.
+	find "S T E"
+	down  1
+	find "S T E"
+	down 10
+	read 37 47
+	comp "-3.3864E-01"
+#test\SE8_2A2.
+	find "S T E"
+	down  1
+	find "S T E"
+	down 10
+	read 38 47
+	comp "8.0444E-01"
+#test\SE8_2B2.
+	find "S T E"
+	down  1
+	find "S T E"
+	down 10
+	read 37 47
+	comp "-1.1096E+00"
+#test\SE8_3A2.
+	find "S T E"
+	down  1
+	find "S T E"
+	down 10
+	read 37 47
+	comp "-7.9446E-01"
+#test\SE8_4A.
+	find "S T E"
+	down  1
+	find "S T E"
+	down 14
+	read 37 47
+	comp "-1.0806E-01"
+	read 49 59
+	comp "-8.0857E-05"
+#test\SE8_4C.
+	find "S T E"
+	down  1
+	find "S T E"
+	down 14
+	read 37 47
+	comp "-9.8481E-02"
+	read 49 59
+	comp "-8.2619E-05"
+#test\SE8_5A2.
+	find "S T E"
+	down  1
+	find "S T E"
+	down 12
+	read 37 47
+	comp "-5.0037E+00"
+#test\SE8_6A2.
+	find "S T E"
+	down  1
+	find "S T E"
+	down  4
+	read  13 23
+	comp "-5.9969E-02"
+#test\SE8_6B2.
+	find "S T E"
+	down  1
+	find "S T E"
+	down  4
+	read  13 23
+	comp "-6.2420E-02"
+#test\SE8_7A.
+	find "S T E"
+	down  1
+	find "S T E"
+	down 12
+	read  13 23
+	comp "-8.8813E-02"
+#test\SE8_7B.
+	find "S T E"
+	down  1
+	find "S T E"
+	down 12
+	read  13 23
+	comp "-8.9088E-02"
+#test\SE8_8A4.
+	find "S T E"
+	down  1
+	find "S T E"
+	down 24
+	read 37 47
+	comp "-2.8541E-05"
+#test\SE8_8B4.
+	find "S T E"
+	down  1
+	find "S T E"
+	down 24
+	read 37 47
+	comp "-2.8709E-05"
+#test\SE8_9A1.
+	find "S T E"
+	down  1
+	find "S T E"
+	down 10
+	read 26 35
+	comp "1.3904E+00"
+#test\SE8_9B1.
+	find "S T E"
+	down  1
+	find "S T E"
+	down 10
+	read  14 23
+	comp "3.2475E-01"
+#test\SE8_10_4.
+	find "S T E"
+	down  1
+	find "S T E"
+	down 16
+	read 37 47
+	comp "-3.9182E-02"
+#test\SE8_11_2.
+	find "S T E"
+	down  1
+	find "S T E"
+	down  4
+	read  14 23
+	comp "1.1366E-03"
+	down  6
+	read 37 47
+	comp "-1.1379E-03"
+#test\SE8_12_6.
+	find "S T E"
+	down  1
+	find "S T E"
+	down 10
+	read 37 47
+	comp "-6.9010E-01"
+#test\SE8_14A1.
+	find "S T E"
+	down  1
+	find "S T E"
+	down 4
+	read 37 47
+	comp "-9.0119E-01"
+#test\SE8_14A2.
+	find "S T E"
+	down  1
+	find "S T E"
+	down 4
+	read 37 47
+	comp "-8.8614E-01"
+#test\SE9_1.
+	find "S T E"
+	down  1
+	find "S T E"
+	down  5
+	read  13 23
+	comp "-3.7037E+00"
+	read 74 83
+	comp "7.4074E-02"
+	find "COMPO"
+	down  4
+	read  9 18
+	comp "5.5556D-04"
+	down  2
+	read  9 18
+	comp "1.0000D-03"
+	down  2
+	read 21 30
+	comp "1.3333D-03"
+	down  2
+	read 20 30
+	comp "-4.4444D-04"
+	find "RR"
+	down  27
+	read 34 42
+	comp "2.963D+02"
+#test\SE9_2.
+	find "S T E"
+	down  1
+	find "S T E"
+	down  5
+	read 62 71
+	comp "3.4599E-02"
+	find "COMPO"
+	down  8
+	read 33 42
+	comp "3.7070D-01"
+	find "RR"
+	down  3
+	read 56 64
+	comp "8.333D+01"
+#test\SE9_3.
+	find "S T E"
+	down  1
+	find "S T E"
+	down  5
+	read 14 23
+	comp "5.0003E-03"
+	read 38 83
+	comp "2.5007E-03  3.7500E-03  2.8188E-03 -7.5000E-03"
+#test\SE9_4A.
+	find "S T E"
+	down  1
+	find "S T E"
+	down  4
+	read 26 35
+	comp "3.2742E-02"
+#test\SE9_4B.
+	find "S T E"
+	down  1
+	find "S T E"
+	down  4
+	read 26 35
+	comp "3.9035E-02"
+#test\SD_1A.
+	find "E I G"
+	down 1
+	find "E I G"
+	down 4
+	read 56 67
+	comp "4.10716D+01"
+#test\SD_1B.
+	find "E I G"
+	down 1
+	find "E I G"
+	down 4
+	read 56 67
+	comp "4.10186D+01"
+#test\SD_1C.
+	find "E I G"
+	down 1
+	find "E I G"
+	down 4
+	read 56 67
+	comp "4.08206D+01"
+#test\SD_2A.
+	find "E I G"
+	down 1
+	find "E I G"
+	down 4
+	read 56 67
+	comp "1.20449D+01"
+#test\SD_2B.
+	find "E I G"
+	down 1
+	find "E I G"
+	down 4
+	read 56 67
+	comp "2.20872D+01"
+#test\SM7_1.
+	find "=   20"
+	find "XX"
+	down  3
+	read 40 49
+	comp "-9.892E-01"
+#test\SM9_1A.
+	find "=  100"
+	find "XX"
+	down  3
+	read 40 49
+	comp "-2.150E+02"
+#test\SM9_1B.
+	find "=  100"
+	find "XX"
+	down  3
+	read 40 49
+	comp "-2.150E+02"
+#test\SM9_2.
+	find "=   27"
+	down  9
+	read  13 35
+	comp "-4.5676E-02 -1.6756E+00"
+#test\SG_1.
+	find "MAX.DISPL."
+	read 51 60
+	comp "8.8110D-01"
+#test\SG_2.
+	find "MAX.DISPL."
+	read 51 60
+	comp "3.3230D-02"
+#test\SD_4.
+	find "S T E"
+	down  1
+	find "S T E"
+	down 20
+	read 13 35
+	comp "-2.2385E-02 -4.8338E-03"
+	read 74 83
+	comp "2.2054E-04"
+	find "S T E"
+	down  1
+	find "S T E"
+	down  1
+	find "S T E"
+	down  1
+	find "S T E"
+	down 20
+	read 13 35
+	comp "-1.0640E-01 -6.6290E-03"
+	read 74 83
+	comp "9.0676E-04"
+

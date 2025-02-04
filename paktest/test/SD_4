@@ -1,0 +1,130 @@
+C /1/ HEADING CARD (80A1)
+C NASLOV
+SD_4: DYNAMICS OF DEFORMABLE STRUCTURE WITH RIGID BODY
+C /2/ FORMAT FOR INPUT DATA(free format)
+C INDFOR
+    2
+C /3/ BASIC DATA FOR THE PROBLEM (4I5)
+C NP,NGELEM,NMATM,NPER,JPS,NKRT
+   17    1    1    1         1
+C /3-1/ CARD WITH BASIC DATA ABOUT RIGID BODIES (4I5)
+C KT3D,NLNC,MAXVEZ,MXRAC
+    0    1    4    0
+C /4/ BASIC DATA FOR THE PROBLEM (6I2,3X,3I5)
+C (IOPGL(I),I=1,6),NDIN,ISOPS,ICVEL
+ 0 0 1 1 1 0  0    1    0    0    0
+C /5/ DATA FOR POST-PROCESSING (10I5)
+C NULAZ,NBLPR,NBLGR,ISTKO,NCVPR,ISTEM,ISTVN,ISTSI,ISTDE,ISTNA
+    0    0    0     
+C /7/ DATA FOR RESTART (I5,10X,2I5,2F10.0)
+C IREST,       NMODS,ICCGG,    TOLG,    ALFAG
+    0    0.0
+C /8/ GROUP OF CARDS WITH DATA FOR TIME STEPS (2I5,F10.0)
+C   I,NKDT(I),DTDT(I)    (I=1,NPER)
+    1  100    .0001
+C /8-1/ DATA FOR DYNAMIC ANALISYS (2I5)
+C IMASS,IDUMP
+    1    0
+C /8-2/ DATA FOR INTEGRATION METHOD FOR DYNAMIC ANALYSIS (2I5)
+C MDVI,PIP,DIP
+    2    .0      .0
+C /9/ DATA FOR EQULIBRIUM ITERATIONS (5I5,4F10.0,I5)
+C METOD,MAXIT,KONVE,KONVS,KONVM,TOLE,    TOLS,     TOLM,     TOLA,NBRCR
+    0    0    0    0    0    0.        0.         0.
+C /10/ INPUT NODAL DATA (I5,A1,6I2,2X,3F10.0,2I5)   (K=1,NP)
+C  N,CH,(ID(N,I),I=1,6),   (CORD(N,J),J=1,3),      KORC,INDS
+    1  1 1 1 0 0 1      0.         0.        0.       0
+    2  0 0 1 0 0 1    100.         0.        0.       0
+    3  0 0 1 0 0 1    200.         0.        0.       0
+    4  1 1 1 0 0 1    300.         0.        0.       0
+    5  0 0 1 0 0 1      0.       100.        0.       0
+    6  0 0 1 0 0 1    100.       100.        0.       0
+    7  0 0 1 0 0 1    200.       100.        0.       0
+    8  0 0 1 0 0 1    300.       100.        0.       0
+    9  0 0 1 0 0 1      0.       200.        0.       0
+   10  0 0 1 0 0 1    100.       200.        0.       0
+   11  0 0 1 0 0 1    200.       200.        0.       0
+   12  0 0 1 0 0 1    300.       200.        0.       0
+   13  0 0 1 0 0 1      0.       300.        0.       0
+   14  0 0 1 0 0 1    100.       300.        0.       0
+   15  0 0 1 0 0 1    200.       300.        0.       0
+   16  0 0 1 0 0 1    300.       300.        0.       0
+   17  0 0 1 0 0 0    150.       150.        0.       0
+C /10-01/ DATA ABOUT RIGID BODIES
+C a) Data about chain of rigid bodies (14I5)
+C NKTLNC, LNCVZ, NBVEZ
+    1    0    0
+C b) data about rigid bodies within chain (2I5)
+C NCGL, NVEZ
+   17    4  
+C c1) 2D problem-data about mass and moment of inertia for rigid bodiy (2E15.5)
+       7.85d-06        1.3d-02
+C d) data about contour nodes of rigid bodies (14I5)
+C NCVEZ, NCVEZ
+    6    7   11   10
+C /10-1/ DATA ABOUT INITIAL CONDITIONS (6I5)
+C-IPUU,IPUV,IPUA,ISUU,ISUV,ISUA
+    0    0    0    0    0    0
+C /11/ DATA FOR MATERIAL MODELS (3I5)
+C (MODEL(I,K),I=1,3)    (K=1,NMATM)
+    1    1    1
+C /12/ DATA FOR MATERIAL (2I5,F10.0)
+C MOD  MAT     GUST
+    1    1  7.85d-10
+C /12-1/ MATERIAL MODEL 1 (ELASTIC-ISOTROPIC) (two cards)
+C a) YOUNG'S MODULUS (F10.0)
+C-   E
+    2.1E04
+C b) POISSON'S RATIO (F10.0)
+C-   V
+    0.3
+C /13/ INPUT DATA FOR ELEMENT GROUP (8I5,3F10.0)    (I=1,NGELEM)
+C NETIP,NE,IATYP,NMODM,INDBTH,INDDTH,INDKOV,ICOEF,COEF1,COEF2,   COEF3
+    2    8    0    1    0    
+C /13-2/ DATA FOR 2/D ISOPARAMETRIC ELEMENTS
+C a) First card with basic data for the element group (3I5,F10.0)
+C IETYP,NGAUSR,NGAUSS,BETA         
+    2    2    2    0   .0                                            1
+C b) Card wiht data for the current element (5I5,F10.0,I5,2F10.0)
+C NN,NMAT,IPRCO,ISNA,IPGS,THI,KORC,BTH,DTH
+    1    1    0    0    0    1.        0     0.0        
+C c) Card with nodal point data for the current element (9i5)
+C (NEL(NN,I),I=1,9)                      
+    1    2    6    5    0    0    0    0    0
+    2    1    0    0    0    1.        0     0.0        
+    2    3    7    6    0    0    0    0    0
+    3    1    0    0    0    1.        0     0.0        
+    3    4    8    7    0    0    0    0    0
+    4    1    0    0    0    1.        0     0.0        
+    5    6   10    9    0    0    0    0    0
+    5    1    0    0    0    1.        0     0.0        
+    7    8   12   11    0    0    0    0    0
+    6    1    0    0    0    1.        0     0.0        
+    9   10   14   13    0    0    0    0    0
+    7    1    0    0    0    1.        0     0.0        
+   10   11   15   14    0    0    0    0    0
+    8    1    0    0    0    1.        0     0.0        
+   11   12   16   15    0    0    0    0    0
+C /14/ DATA ABOUT TIME FUNCTIONS (4I5)
+C NTABFT,MAXTFT
+    1    2
+C /14-1/ GROUP OF CARDS WITH TABLES FOR TIME FUNCTIONS
+C a) data about function in a table form (2I5)
+C IBR,IMAX                       IBR=1,NTABFT
+    1    2
+C b) values for argument - function (2F10.0)
+C (FN(I,IBR,J),I=1,2)              J=1,IMAX
+    0.      1.
+   10.      1.
+C /15/ GENERAL DATA ABOUT LOADS (3I5.10X,3I5)
+C NCF,NPP2,NPP3,          NPLJ,NTEMP,NZADP,INDZS
+    1    0    0    0    0    0    0    0
+C /15-1/ CONCENTRATED LOADS DATA (3I5,F10.2,I5)           I=1,NCF
+C   N,  IP,  NC,  FAK,     KORC
+   16    1    1 -1000.       0
+C /16/ TERMINATED CARD (A4)	       'STOP'
+STOP
+
+
+
+

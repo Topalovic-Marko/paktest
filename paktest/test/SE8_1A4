@@ -1,0 +1,129 @@
+C /1/ HEADING CARD (8A01)
+C NASLOV
+SE8_1A4: CLAMPED SQUARE PLATE LOADED BY CONCENTRATED FORCE (MESH 4 X 4)
+C /2/ FORMAT FOR INPUT DATA (free format)
+C INDFOR
+    2
+C /3/ BASIC DATA FOR THE PROBLEM (5I5)
+C NP,NGELEM,NMATM,NPER,JPS
+   25    1    1    1    1
+C /4/ BASIC DATA FOR THE PROBLEM (6I2,3X,3I5)
+C (IOPGL(I),I=1,6),NDIN,ISOPS,ICVEL
+ 0 0 0 0 0 1       0    0    1
+C /5/ DATA FOR POST-PROCESSING (4I5)
+C NULAZ,NBLPR,NBLGR,ISTKO
+    0    1    1    0
+C /6/ CARD WITH DATA FOR BLOCKS (5I5)
+C NBL,(NPRGR(NBL,I),I=1,4)
+    1    1    1    1    0
+    1    1    1    1    0
+C /7/ DATA FOR RESTART (I5,10X,2I5,2F10.0)
+C IREST,       NMODS,ICCGG,    TOLG,    ALFAG
+    0              0    0        0.        0.
+C /8/ DATA FOR TIME STEPS (2I5,F10.0)
+C   I,NKDT(I),DTDT(I)    (I=1,NPER)
+    1    1  1.000000
+C /9/ DATA FOR EQULIBRIUM ITERATIONS (5I5,3F10.0,10X,I5)
+C METOD,MAXIT,KONVE,KONVS,KONVM,TOLE,    TOLS,     TOLM,     TOLA,NBRCR
+    1   30    1    0    0  0.000001        0.        0.        0.    2
+C /10/ INPUT NODAL DATA (I5,A1,6I2,2X,3F10.0,2I5)   (K=1,NP)
+C  N,CH,(ID(N,I),I=1,6),   (CORD(N,J),J=1,3),      KORC,INDS
+    1  1 1 1 1 1 1   0.000E+00 0.000E+00 0.000E+00
+    2  1 1 1 1 1 1   0.000E+00 5.000E-01 0.000E+00
+    3  1 1 1 1 1 1   0.000E+00 1.000E+00 0.000E+00
+    4  1 1 1 1 1 1   0.000E+00 1.500E+00 0.000E+00
+    5  1 1 1 1 1 1   0.000E+00 2.000E+00 0.000E+00
+    6  0 1 0 1 0 0   5.000E-01 0.000E+00 0.000E+00
+    7  0 0 0 0 0 0   5.000E-01 5.000E-01 0.000E+00
+    8  0 0 0 0 0 0   5.000E-01 1.000E+00 0.000E+00
+    9  0 0 0 0 0 0   5.000E-01 1.500E+00 0.000E+00
+   10  1 1 1 1 1 1   5.000E-01 2.000E+00 0.000E+00
+   11  0 1 0 1 0 0   1.000E+00 0.000E+00 0.000E+00
+   12  0 0 0 0 0 0   1.000E+00 5.000E-01 0.000E+00
+   13  0 0 0 0 0 0   1.000E+00 1.000E+00 0.000E+00
+   14  0 0 0 0 0 0   1.000E+00 1.500E+00 0.000E+00
+   15  1 1 1 1 1 1   1.000E+00 2.000E+00 0.000E+00
+   16  0 1 0 1 0 0   1.500E+00 0.000E+00 0.000E+00
+   17  0 0 0 0 0 0   1.500E+00 5.000E-01 0.000E+00
+   18  0 0 0 0 0 0   1.500E+00 1.000E+00 0.000E+00
+   19  0 0 0 0 0 0   1.500E+00 1.500E+00 0.000E+00
+   20  1 1 1 1 1 1   1.500E+00 2.000E+00 0.000E+00
+   21  1 1 0 1 1 0   2.000E+00 0.000E+00 0.000E+00
+   22  1 0 0 0 1 0   2.000E+00 5.000E-01 0.000E+00
+   23  1 0 0 0 1 0   2.000E+00 1.000E+00 0.000E+00
+   24  1 0 0 0 1 0   2.000E+00 1.500E+00 0.000E+00
+   25  1 1 1 1 1 1   2.000E+00 2.000E+00 0.000E+00
+C /11/ DATA FOR MATERIAL MODELS (3I5)
+C (MODEL(I,K),I=1,3)    (K=1,NMATM)
+    1    1    1
+C /12/ DATA FOR MATERIAL (2I5,F10.0)
+C MOD  MAT     GUST
+    1    1 0.00E+000
+C /12-1/ MATERIAL MODEL 1 (ELASTIC)
+C YOUNGS MODULUS, POISSONS RATIO (2F10.0)
+C        E
+ 1.00E+007
+C        V
+ 0.30E+000
+C /13/ INPUT DATA FOR ELEMENT GROUP (8I5,3F10.0)    (I=1,NGELEM)
+C NETIP,NE,IATYP,NMODM,INDBTH,INDDTH,INDKOV,ICOEF,COEF1,COEF2,   COEF3
+   84   16    0    1
+C /13-8/ DATA FOR ISOPARAMETRIC SHELL
+C a) First card wiht basic data for the element group (4I5,F10.0,I5,3F10.0,I5)
+C NAGAUSX,NGAUSY,NGAUSZ,MSET,BETA,MSLOJ,(CPP(I),I=1,3),          IALFA
+    0    0    0                                                      0
+C b) Card wiht data for the current element (5I5,F10.0,I5,2F10.0)
+C NN,NMAT,IPRCO,ISNA,IPGS,THI,KORC,BTH,DTH
+C c) Card with nodal point data for the cuurent element (9I5)
+C (NEL(NN,I),I=1,K)
+    1    1    0    0    01.000e-002    0    0.0000    0.0000
+    1    6    7    2
+    2    1    0    0    01.000e-002    0    0.0000    0.0000
+    2    7    8    3
+    3    1    0    0    01.000e-002    0    0.0000    0.0000
+    3    8    9    4
+    4    1    0    0    01.000e-002    0    0.0000    0.0000
+    4    9   10    5
+    5    1    0    0    01.000e-002    0    0.0000    0.0000
+    6   11   12    7
+    6    1    0    0    01.000e-002    0    0.0000    0.0000
+    7   12   13    8
+    7    1    0    0    01.000e-002    0    0.0000    0.0000
+    8   13   14    9
+    8    1    0    0    01.000e-002    0    0.0000    0.0000
+    9   14   15   10
+    9    1    0    0    01.000e-002    0    0.0000    0.0000
+   11   16   17   12
+   10    1    0    0    01.000e-002    0    0.0000    0.0000
+   12   17   18   13
+   11    1    0    0    01.000e-002    0    0.0000    0.0000
+   13   18   19   14
+   12    1    0    0    01.000e-002    0    0.0000    0.0000
+   14   19   20   15
+   13    1    0    0    01.000e-002    0    0.0000    0.0000
+   16   21   22   17
+   14    1    0    0    01.000e-002    0    0.0000    0.0000
+   17   22   23   18
+   15    1    0    0    01.000e-002    0    0.0000    0.0000
+   18   23   24   19
+   16    1    0    0    01.000e-002    0    0.0000    0.0000
+   19   24   25   20
+C /14/ DATA FOR TIME FUNCTIONS (2I5)
+C NTABFT,MAXTFT
+    1   30
+C /14-1/ TIME FUNCTIONS   (IBR=1,NTABFT)
+C a) data about function in a table form (2I5)
+C IBR,IMAX    (IMAX.LE.MAXTFT)
+    1    2
+C b) values for argument - function (2F10.0)
+C ((FN(I,IBR,J),I=1,2),J=1,IMAX)
+ 0.00E+000 1.00E+000
+ 1.00E+003 1.00E+000
+C /15/ GENERAL DATA ABOUT LOADS (3I5,10X,5I5)
+C NCF,NPP2,NPP3,          NPLJ,NTEMP,NZADP,INDZS,ICERNE
+    1    0    0              0    0    0    0
+C /15-1/ CONCENTRATED LOADS DATA (3I5,F10.0,I5,F10.0)
+C   N   IP   NC   FAK     KORC      FPOM
+   21    3    1 1.00E+000
+C /16/ TERMINATED CARD (A4)       'STOP'
+STOP

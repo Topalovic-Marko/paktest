@@ -1,0 +1,149 @@
+C /1/ HEADING CARD (8A01)
+C NASLOV
+se2_3:Stress concentration ...
+C /2/ FORMAT FOR INPUT DATA (free format)
+C INDFOR
+    1
+C /3/ BASIC DATA FOR THE PROBLEM (5I5)
+C NP,NGELEM,NMATM,NPER,JPS,NKRT
+   50    1    1    1    1    0
+C /4/ BASIC DATA FOR THE PROBLEM (6I2,3X,3I5)
+C (IOPGL(I),I=1,6),NDIN,ISOPS,ICVEL
+ 0 0 1 1 1 1       0    0    1
+C /5/ DATA FOR POST-PROCESSING (4I5)
+C NULA,NBLP,NBLG,ISTK,NCVP,ISTE,ISTV,ISTS,ISTD,ISTN
+    0    1    1    0    0   -1   -1   -1   -1    0
+C /6/ CARD WITH DATA FOR BLOCKS (5I5)
+C NBL,(NPRGR(NBL,I),I=1,4)
+    1    1    1    1    0
+    1    1    1    1    0
+C /7/ DATA FOR RESTART (I5,10X,2I5,2F10.0)
+C IREST,       NMODS,ICCGG,    TOLG,    ALFAG
+    0          0    0        0.        0.
+C /8/ DATA FOR TIME STEPS (2I5,F10.0)
+C   I,NKDT(I),DTDT(I)    (I=1,NPER)
+    1    1  1.000000
+C /9/ DATA FOR EQULIBRIUM ITERATIONS (5I5,3F10.0,10X,I5)
+C METOD,MAXIT,KONVE,KONVS,KONVM,TOLE,    TOLS,     TOLM,     TOLA,NBRCR
+    1   90    1    0    0  0.000001  0.000000        0.        0.    2
+C /10/ INPUT NODAL DATA (I5,A1,6I2,2X,3F10.0,2I5)   (K=1,NP)
+C  N,CH,(ID(N,I),I=1,6),   (CORD(N,J),J=1,3),      KORC,INDS
+    9 'C' 0 1 0 0 0 0   5.0000E+0 0.0000E+0 0.0000E+0    0    0
+   10 'C' 0 1 0 0 0 0   6.0000E+0 0.0000E+0 0.0000E+0    0    0
+   11 'C' 0 1 0 0 0 0   7.0000E+0 0.0000E+0 0.0000E+0    0    0
+   24 'C' 0 1 0 0 0 0   8.5000E+0 0.0000E+0 0.0000E+0    0    0
+   25 'C' 0 1 0 0 0 0   1.0000E+1 0.0000E+0 0.0000E+0    0    0
+   12 'C' 0 0 0 0 0 0   4.9217E+0 8.8146E-1 0.0000E+0    0    0
+   26 'C' 0 0 0 0 0 0   1.0000E+1 1.3333E+0 0.0000E+0    0    0
+   13 'C' 0 0 0 0 0 0   6.8523E+0 1.4020E+0 0.0000E+0    0    0
+   14 'C' 0 0 0 0 0 0   4.6892E+0 1.7353E+0 0.0000E+0    0    0
+   15 'C' 0 0 0 0 0 0   5.6417E+0 2.2616E+0 0.0000E+0    0    0
+   17 'C' 0 0 0 0 0 0   4.3098E+0 2.5348E+0 0.0000E+0    0    0
+   28 'C' 0 0 0 0 0 0   1.0000E+1 2.6667E+0 0.0000E+0    0    0
+   27 'C' 0 0 0 0 0 0   8.2971E+0 2.7273E+0 0.0000E+0    0    0
+   16 'C' 0 0 0 0 0 0   6.5942E+0 2.7880E+0 0.0000E+0    0    0
+   19 'C' 0 0 0 0 0 0   3.7955E+0 3.2549E+0 0.0000E+0    0    0
+   22 'C' 0 0 0 0 0 0   3.1622E+0 3.8730E+0 0.0000E+0    0    0
+   29 'C' 0 0 0 0 0 0   1.0000E+1 4.0000E+0 0.0000E+0    0    0
+   18 'C' 0 0 0 0 0 0   6.2273E+0 4.1492E+0 0.0000E+0    0    0
+   20 'C' 0 0 0 0 0 0   4.7747E+0 4.3660E+0 0.0000E+0    0    0
+    1 'C' 0 0 0 0 0 0   2.4300E+0 4.3700E+0 0.0000E+0    0    0
+    4 'C' 0 0 0 0 0 0   1.2552E+0 4.8401E+0 0.0000E+0    0    0
+    6 'C' 1 0 0 0 0 0   0.0000E+0 5.0002E+0 0.0000E+0    0    0
+   31 'C' 0 0 0 0 0 0   1.0000E+1 5.3333E+0 0.0000E+0    0    0
+   30 'C' 0 0 0 0 0 0   7.8769E+0 5.4052E+0 0.0000E+0    0    0
+   21 'C' 0 0 0 0 0 0   5.7539E+0 5.4771E+0 0.0000E+0    0    0
+    2 'C' 0 0 0 0 0 0   3.4650E+0 6.1850E+0 0.0000E+0    0    0
+   32 'C' 0 0 0 0 0 0   1.0000E+1 6.6667E+0 0.0000E+0    0    0
+   23 'C' 0 0 0 0 0 0   5.1769E+0 6.7634E+0 0.0000E+0    0    0
+    7 'C' 1 0 0 0 0 0   0.0000E+0 7.0001E+0 0.0000E+0    0    0
+    3 'C' 0 0 0 0 0 0   4.5000E+0 8.0000E+0 0.0000E+0    0    0
+   33 'C' 0 0 0 0 0 0   7.2500E+0 8.0000E+0 0.0000E+0    0    0
+   34 'C' 0 0 0 0 0 0   1.0000E+1 8.0000E+0 0.0000E+0    0    0
+    5 'C' 0 0 0 0 0 0   2.2723E+0 8.6002E+0 0.0000E+0    0    0
+    8 'C' 1 0 0 0 0 0   0.0000E+0 9.0000E+0 0.0000E+0    0    0
+   35 'C' 0 0 0 0 0 0   4.5000E+0 1.3000E+1 0.0000E+0    0    0
+   45 'C' 0 0 0 0 0 0   1.0000E+1 1.3000E+1 0.0000E+0    0    0
+   41 'C' 1 0 0 0 0 0   0.0000E+0 1.3750E+1 0.0000E+0    0    0
+   36 'C' 0 0 0 0 0 0   4.5000E+0 1.8000E+1 0.0000E+0    0    0
+   47 'C' 0 0 0 0 0 0   7.2500E+0 1.8000E+1 0.0000E+0    0    0
+   46 'C' 0 0 0 0 0 0   1.0000E+1 1.8000E+1 0.0000E+0    0    0
+   39 'C' 0 0 0 0 0 0   2.2611E+0 1.8300E+1 0.0000E+0    0    0
+   42 'C' 1 0 0 0 0 0   0.0000E+0 1.8500E+1 0.0000E+0    0    0
+   37 'C' 0 0 0 0 0 0   4.5000E+0 2.3000E+1 0.0000E+0    0    0
+   48 'C' 0 0 0 0 0 0   1.0000E+1 2.3000E+1 0.0000E+0    0    0
+   43 'C' 1 0 0 0 0 0   0.0000E+0 2.3250E+1 0.0000E+0    0    0
+   44 'C' 1 0 0 0 0 0   0.0000E+0 2.8000E+1 0.0000E+0    0    0
+   40 'C' 0 0 0 0 0 0   2.2500E+0 2.8000E+1 0.0000E+0    0    0
+   38 'C' 0 0 0 0 0 0   4.5000E+0 2.8000E+1 0.0000E+0    0    0
+   50 'C' 0 0 0 0 0 0   7.2500E+0 2.8000E+1 0.0000E+0    0    0
+   49 'C' 0 0 0 0 0 0   1.0000E+1 2.8000E+1 0.0000E+0    0    0
+C /11/ DATA FOR MATERIAL MODELS (3I5)
+C (MODEL(I,K),I=1,3)    (K=1,NMATM)
+    1    1   20
+C /12/ DATA FOR MATERIAL (2I5,F10.0)
+C MOD  MAT     GUST
+    1    1      0.e0
+C /12-1/ MATERIAL MODEL 1 (ELASTIC)
+C YOUNGS MODULUS, POISSONS RATIO (2F10.0)
+C        E
+      7.e4
+C        V
+    2.5e-1
+C   TOTAL NUMBER OF ELEMENTS :   11
+C   ELEMENT GROUP NUMBER:     1
+C /13/ INPUT DATA FOR ELEMENT GROUP (8I5,3F10.0)    (I=1,NGELEM)
+C NETIP,NE,IATYP,NMODM,INDBTH,INDDTH,INDKOV,ICOEF,COEF1,COEF2,   COEF3
+    2   11    0    1    0    0    0        0.         0.          0.
+C /13-2/ DATA FOR 2/D ISOPARAMETRIC ELEMENTS
+C a) First card with basic data for the element group (4I5,F10.0,I5,3F10.0,I5)
+C IETYP,NGAUSX,NGAUSY,MSET,BETA,MSLOJ,CPP1,CPP2,CPP3,IALFA
+    0   13   13    0    0.        0    0.        0.        0.        0
+C b) Card with data for the current element (5I5,F10.0,I5,2F10.0)
+C NN,NMAT,IPRCO,ISNA,IPGS,THI,KORC,BTH,DTH
+C c) Card with nodal point data of the current element (9I5)
+C (NEL(NN,I),I=1,K)
+    1    1    0    0    0    1.        0    0.0000    0.0000
+    1    3    8    6    2    5    7    4    0
+    2    1    0    0    0    1.        0    0.0000    0.0000
+    9   11   16   14   10   13   15   12    0
+    3    1    0    0    0    1.        0    0.0000    0.0000
+   14   16   21   19   15   18   20   17    0
+    4    1    0    0    0    1.        0    0.0000    0.0000
+   19   21    3    1   20   23    2   22    0
+    5    1    0    0    0    1.        0    0.0000    0.0000
+   11   25   28   16   24   26   27   13    0
+    6    1    0    0    0    1.        0    0.0000    0.0000
+   16   28   31   21   27   29   30   18    0
+    7    1    0    0    0    1.        0    0.0000    0.0000
+   21   31   34    3   30   32   33   23    0
+    8    1    0    0    0    1.        0    0.0000    0.0000
+    3   36   42    8   35   39   41    5    0
+    9    1    0    0    0    1.        0    0.0000    0.0000
+   36   38   44   42   37   40   43   39    0
+   10    1    0    0    0    1.        0    0.0000    0.0000
+   34   46   36    3   45   47   35   33    0
+   11    1    0    0    0    1.        0    0.0000    0.0000
+   46   49   38   36   48   50   37   47    0
+C /14/ DATA FOR TIME FUNCTIONS (2I5)
+C NTABFT,MAXTFT
+    1   30
+C /14-1/ TIME FUNCTIONS   (IBR=1,NTABFT)
+C a) data about function in a table form (2I5)
+C IBR,IMAX    (IMAX.LE.MAXTFT)
+    1    2
+C b) values for argument - function (2F10.0)
+C ((FN(I,IBR,J),I=1,2),J=1,IMAX)
+      0.E0      1.E0
+      1.E1      1.E0
+C /15/ GENERAL DATA ABOUT LOADS (3I5,10X,5I5)
+C NCF,NPP2,NPP3,NPGR,     NPLJ,NTEMP,NZADP,INDZS,ICERNE
+    0    2    0    0         0    0    0    0    0
+C /15-3/ SURFACE LOADING (2I5,4F10.0,I5)
+C ITIPE(I) NFUN(I) IPRAV(I) FAKP(I,1) FAKP(I,2) THICV(I) KORC
+    0    1    2 2.50E+001 2.50E+001 1.00E+000    0
+   38   44   40
+    0    1    2 2.50E+001 2.50E+001 1.00E+000    0
+   49   38   50
+C /16/ TERMINATED CARD (A4)       'STOP'
+STOP

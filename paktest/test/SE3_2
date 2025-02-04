@@ -1,0 +1,138 @@
+C /1/ HEADING CARD (80A1)
+C NASLOV
+SE3_2: THERMO-ELASTIC ANALYSIS OF A CANTILEVER BEAM
+C /2/ FORMAT FOR INPUT DATA(free format)
+C INDFOR
+    2
+C /3/ BASIC DATA FOR THE PROBLEM (5I5)
+C NP,NGELEM,NMATM,NPER,JPS
+   44    1    1    1
+C /4/ BASIC DATA FOR THE PROBLEM (6I2,3X,2I5)
+C (IOPGL(I),I=1,6),     NDIN,ITEST,ICVEL
+ 0 0 0 1 1 1  0    0    0
+C /5/ DATA FOR POST-PROCESSING (10I5)
+C NULAZ,NBLPR,NBLGR,ISTKO,NCVPR,ISTEM,ISTVN,ISTSI,ISTDE,ISTNA
+    0    0    0
+C /7/ DATA FOR RESTART (I5,10X,2I5,2F10.0)
+C IREST,       NMODS,ICCGG,    TOLG,    ALFAG
+    0    0.0
+C /8/ GROUP OF CARDS WITH DATA FOR TIME STEPS (2I5,F10.0)
+C   I,NKDT(I),DTDT(I)    (I=1,NPER)
+    1    1   1.
+C /9/ DATA FOR EQULIBRIUM ITERATIONS (5I5,3F10.0,10X,I5)
+C METOD,MAXIT,KONVE,KONVS,KONVM,TOLE,    TOLS,     TOLM,     TOLA,NBRCR
+    0    0    1    0    0    0.        0.         0.
+C /10/ GROUP OF CARDS FOR NODAL POINT DATA (A1,I4,1X,6I2,2X,3F10.2,I5)
+C-CH,N,(ID(N,I),I=1,6),   (CORD(N,J),J=1,3),        KORC
+   37                                6.0      1.00  -12
+    1    1                                    1.00
+   38                     0.5        6.0      1.00  -12
+    2  1 1                0.5                 1.00
+   39                     1.0        6.0      1.00  -12
+    3    1                1.0                 1.00
+   33                                5.0      1.00  -12
+    9                                1.0      1.00
+   34                     1.0        5.0      1.00  -12
+   10                     1.0        1.0      1.00
+   40                                6.0      0.50  -12
+    4    1 1                                  0.50
+   41                     1.0        6.0      0.50  -12
+    5    1 1              1.0                 0.50
+   42                                6.0            -12
+    6    1
+   35                                5.0      0.00  -12
+   11                                1.0
+   43                     0.5        6.0            -12
+    7  1 1                0.5
+    8    1                1.0
+   12                     1.0        1.0             12
+   36                     1.0        5.0
+   20                     1.0        2.0             12
+   44                     1.0        6.0
+C /11/ DATA FOR MATERIAL MODELS (3I5)
+C (MODEL(I,K),I=1,3)    (K=1,NMATM)
+    3    1    2
+C /12/ DATA FOR MATERIAL (2I5,F10.0)
+C MOD  MAT     GUST
+    3    1
+C /12-3/ MATERIAL MODEL 3 (THERMO-ELASTIC ISOTROPIC) 
+C a1) Number of points for definition of function for elastic modulus (I5)
+    2
+C a2) Values for argument (T) and function for elastic modulus (E) (2F10.0)
+    0.      3.0D07
+   1000.      3.0D07
+C b1) Number of points for definition of Poisson's function (I5)
+    2
+C b2) Values for argument (T) and function for Poisson's ratio (2F10.0)
+      0.       .3D00
+   1000.       .3D00
+C c1)Number of points for definition of function for coefficient of thermal expansion (I5)
+    2
+C c2)Values of argument (T) and function for coefficient of thermal expansion (2F10.0)
+      0.      6.0D-6
+   1000.      6.0D-6
+C d) Reference temperature (F10.0)
+    75.
+C /13/ INPUT DATA FOR ELEMENT GROUP (8I5,3F10.0)    (I=1,NGELEM)
+C NETIP,NE,IATYP,NMODM,INDBTH,INDDTH,INDKOV,ICOEF,COEF1,COEF2,   COEF3
+    3    3    1    3
+C /13-3/ DATA FOR 3/D ISOPARAMETRIC ELEMENTS
+C a) First card with basic data for the element group (3I5)
+C NGAUSX,NGAUSY,NGARSZ,BETA,IALFA
+    3    3    3
+C b) card with nodal point data of the current element (6I5)
+C NN,NMAT,IPRCO,ISNA,IPGS,KORC,BTH,DTH
+    1    1    0    0    0   12
+C /GROUP OF TWO CARDS WITH ELEMENT NODES
+C c1) Card with nodal point data for the current element (8i5)
+C (NEL(NN,I),I=1,8)                      
+   13    1    3   15   18    6    8   20
+C c2) Card with nodal point data for the current element (13i5)
+C (NEL(NN,I),I=9,21)
+    9    2   10   14   11    7   12   19   16    4    5   17
+    3    1    0    0    0    0
+   37   25   27   39   42   30   32   44
+   33   26   34   38   35   31   36   43   40   28   29   41
+C /14/ DATA ABOUT TIME FUNCTIONS (4I5)
+C NTABFT,MAXTFT
+    1    2
+C /14-1/ GROUP OF CARDS WITH TABLES FOR TIME FUNCTIONS
+C a) data about function in a table form (2I5)
+C IBR,IMAX    (IMAX.LE.MAXTFT)
+    1    2
+C b) values for argument - function (2F10.0)
+C ((FN(I,IBR,J),I=1,2),J=1,IMAX)
+    0.      125.
+   10.      125.
+C /15/ GENERAL DATA ABOUT LOADS (3I5.10X,3I5)
+C NCF,NPP2,NPP3,           NPLJ,NTEMP,NZADP
+    0    0    0    0    0    0   44
+C /15-7/ DATA FOR TEMPERATURES (2I5,F10.0,I5)
+C   N,  NC,    FAK,  KORC
+    1    1     1.2     12
+   37    1     1.2
+    9    1     1.2     12
+   33    1     1.2
+    2    1     1.2     12
+   38    1     1.2
+    3    1     1.2     12
+   39    1     1.2
+   10    1     1.2     12
+   34    1     1.2
+    4    1     1.0     12
+   40    1     1.0
+    5    1     1.0     12
+   41    1     1.0
+    6    1     0.8     12
+   42    1     0.8
+   11    1     0.8     12
+   35    1     0.8
+    7    1     0.8     12
+   43    1     0.8
+   12    1     0.8     12
+   36    1     0.8
+    8    1     0.8     12
+   44    1     0.8
+C /16/ TERMINATED CARD (A4)	       'STOP'
+STOP
+
