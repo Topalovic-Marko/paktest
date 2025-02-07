@@ -68,6 +68,7 @@
     call delete_if_exists('CONTROL.SRE',UNIT_DEL)
     call delete_if_exists('dijagram',UNIT_DEL)
     call delete_if_exists('EGGOS',UNIT_DEL)
+    call delete_if_exists('VREMENA',UNIT_DEL)
     call delete_if_exists('GE0001.neu',UNIT_DEL)
     call delete_if_exists('SE0001',UNIT_DEL)
     call delete_if_exists('POMER1',UNIT_DEL)
@@ -75,6 +76,7 @@
 
     call delete_files_prefix('fort.',is_windows)
     call delete_files_sufix('.UNV',is_windows)
+    call delete_files_sufix('.CSV',is_windows)
 
     end program paktest
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
